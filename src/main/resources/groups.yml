@@ -1,0 +1,50 @@
+Groups:
+  Owner:
+    Chat: "&4&lOwner &7● &4%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&4&lOwner &7● &4"
+    ScoreboardName: "&4&lOwner"
+    Permission: sb.owner
+  Admin:
+    Chat: "&c&lAdmin &7● &c%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&c&lAdmin &7● &c"
+    ScoreboardName: "&c%lAdmin"
+    Permission: sb.admin
+  SrMod:
+    Chat: "&c&lSrMod &7● &c%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&c&lSrMod &7● &c"
+    ScoreboardName: "&c&lSrMod"
+    Permission: sb.srmod
+  Moderator:
+    Chat: "&9&lModerator &7● &9%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&9&lModerator &7● &9"
+    ScoreboardName: "&9&lModerator"
+    Permission: sb.moderator
+  TSup:
+    Chat: "&2&lT-Sup &7● &2%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&2&lT-Sup &7● &2"
+    ScoreboardName: "&2&lT-Sup"
+    Permission: sb.tsup
+  Youtuber:
+    Chat: "&5&lYouTuber &7● &5%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&5&lYouTuber &7● &5"
+    ScoreboardName: "&5&lYoutuber"
+    Permission: sb.youtuber
+  Elite+:
+    Chat: "&e&lElite+ &7● &e%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&e&lElite+ &7● &e"
+    ScoreboardName: "&e&lElite+"
+    Permission: sb.elite+
+  Elite:
+    Chat: "&e&lElite &7● &e%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&e&lElite &7● &e"
+    ScoreboardName: "&e&lElite"
+    Permission: sb.elite
+  Premium:
+    Chat: "&6&lPremium &7● &6%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&6&lPremium &7● &6"
+    ScoreboardName: "&6&lPremium"
+    Permission: sb.premium
+  Default:
+    Chat: "&7&lSpieler &7● &7%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&7"
+    ScoreboardName: "&7Spieler"

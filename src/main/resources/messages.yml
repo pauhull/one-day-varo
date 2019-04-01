@@ -1,0 +1,6 @@
+Prefix: "&6OneDayVaro &8» &f"
+LobbyJoin: "&e%PLAYER% &fist dem Spiel beigetreten"
+LobbyLeave: "6e%PLAYER% &fhat das Spiel verlassen"
+NoPermission: "&cDafür hast du keine Rechte"
+LocationNotSet: "&cDie Location \"%LOCATION%\" wurde noch nicht gesetzt"
+LocationSet: "&aDu hast die Location \"%LOCATION%\" erfolgreich gespeichert"

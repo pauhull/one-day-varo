@@ -1,0 +1,8 @@
+name: ODVPlugin
+version: 1.0
+main: de.pauhull.onedayvaro.OneDayVaro
+author: pauhull
+softdepend: [CoinsAPI]
+
+commands:
+  setlocation:
