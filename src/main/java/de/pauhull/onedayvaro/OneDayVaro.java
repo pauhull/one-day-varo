@@ -79,10 +79,15 @@ public class OneDayVaro extends JavaPlugin {
 
         if (enabled) {
             new AsyncPlayerChatListener(this);
-            new PlayerJoinListener(this);
-            new PlayerQuitListener(this);
             new BlockBreakListener(this);
             new BlockPlaceListener(this);
+            new EntityDamageListener(this);
+            new InventoryClickListener(this);
+            new PlayerDropItemListener(this);
+            new PlayerInteractListener(this);
+            new PlayerJoinListener(this);
+            new PlayerPickupItemListener(this);
+            new PlayerQuitListener(this);
         }
 
         new SetLocationCommand(this);
