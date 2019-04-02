@@ -57,7 +57,7 @@ public class OneDayVaro extends JavaPlugin {
     private FileConfiguration config;
 
     @Getter
-    private boolean enabled;
+    private boolean pluginEnabled;
 
     @Override
     public void onEnable() {
@@ -68,7 +68,7 @@ public class OneDayVaro extends JavaPlugin {
         this.coinApiHook = new CoinApiHook();
         this.locationManager = new LocationManager(this);
         this.config = copyAndLoad("config.yml", new File(getDataFolder(), "config.yml"));
-        this.enabled = config.getBoolean("Enabled");
+        this.pluginEnabled = config.getBoolean("Enabled");
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             scoreboardManager.updateTeam(player);
@@ -77,11 +77,12 @@ public class OneDayVaro extends JavaPlugin {
             scoreboardManager.getScoreboards().put(player, scoreboard);
         }
 
-        if (enabled) {
+        if (pluginEnabled) {
             new AsyncPlayerChatListener(this);
             new BlockBreakListener(this);
             new BlockPlaceListener(this);
             new EntityDamageListener(this);
+            new FoodLevelChangeListener(this);
             new InventoryClickListener(this);
             new PlayerDropItemListener(this);
             new PlayerInteractListener(this);
