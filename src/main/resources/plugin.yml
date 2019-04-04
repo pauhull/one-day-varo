@@ -6,3 +6,5 @@ softdepend: [CoinsAPI]
 
 commands:
   setlocation:
+  options:
+  start:

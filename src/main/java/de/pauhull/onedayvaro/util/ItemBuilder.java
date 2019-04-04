@@ -14,7 +14,15 @@ import java.util.Arrays;
  */
 public class ItemBuilder {
 
-    private ItemStack stack = null;
+    private ItemStack stack;
+
+    public ItemBuilder() {
+        this(null);
+    }
+
+    public ItemBuilder(ItemStack stack) {
+        this.stack = stack;
+    }
 
     public ItemBuilder material(Material material) {
         stack = new ItemStack(material);

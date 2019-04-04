@@ -1,12 +1,17 @@
 package de.pauhull.onedayvaro;
 
+import de.pauhull.onedayvaro.command.OptionsCommand;
 import de.pauhull.onedayvaro.command.SetLocationCommand;
+import de.pauhull.onedayvaro.command.StartCommand;
 import de.pauhull.onedayvaro.display.VaroScoreboard;
 import de.pauhull.onedayvaro.group.GroupManager;
+import de.pauhull.onedayvaro.inventory.OptionsInventory;
 import de.pauhull.onedayvaro.listener.*;
+import de.pauhull.onedayvaro.manager.ItemManager;
 import de.pauhull.onedayvaro.manager.LocationManager;
 import de.pauhull.onedayvaro.util.CoinApiHook;
 import de.pauhull.onedayvaro.util.Locale;
+import de.pauhull.onedayvaro.util.Options;
 import de.pauhull.onedayvaro.util.Permissions;
 import de.pauhull.scoreboard.CustomScoreboard;
 import de.pauhull.scoreboard.ScoreboardManager;
@@ -59,16 +64,28 @@ public class OneDayVaro extends JavaPlugin {
     @Getter
     private boolean pluginEnabled;
 
+    @Getter
+    private OptionsInventory optionsInventory;
+
+    @Getter
+    private Options options;
+
+    @Getter
+    private ItemManager itemManager;
+
     @Override
     public void onEnable() {
         instance = this;
 
+        this.options = new Options();
+        this.itemManager = new ItemManager();
         this.scoreboardManager = new ScoreboardManager(this, VaroScoreboard.class);
         this.groupManager = new GroupManager(this);
         this.coinApiHook = new CoinApiHook();
         this.locationManager = new LocationManager(this);
         this.config = copyAndLoad("config.yml", new File(getDataFolder(), "config.yml"));
         this.pluginEnabled = config.getBoolean("Enabled");
+        this.optionsInventory = new OptionsInventory(this);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             scoreboardManager.updateTeam(player);
@@ -89,6 +106,9 @@ public class OneDayVaro extends JavaPlugin {
             new PlayerJoinListener(this);
             new PlayerPickupItemListener(this);
             new PlayerQuitListener(this);
+
+            new OptionsCommand(this);
+            new StartCommand(this);
         }
 
         new SetLocationCommand(this);

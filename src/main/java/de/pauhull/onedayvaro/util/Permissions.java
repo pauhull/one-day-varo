@@ -14,7 +14,9 @@ import java.lang.reflect.Field;
  */
 public class Permissions {
 
-    public static String SetLocation;
+    public static String SetLocation = "";
+    public static String Options = "";
+    public static String Start = "";
 
     public static void load() {
 

@@ -21,6 +21,8 @@ public class Locale {
     public static String NoPermission = "";
     public static String LocationNotSet = "";
     public static String LocationSet = "";
+    public static String AlreadyIngame = "";
+    public static String OptionChanged = "";
 
     public static void load() {
 

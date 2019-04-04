@@ -31,16 +31,18 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
 
         if (oneDayVaro.isIngame()) {
+
             event.setJoinMessage(null);
             oneDayVaro.getLocationManager().teleport("Spectator", player);
             player.setGameMode(GameMode.SPECTATOR);
         } else {
+
             event.setJoinMessage(Locale.LobbyJoin.replace("%PLAYER%", player.getName()));
             oneDayVaro.getLocationManager().teleport("Lobby", player);
             player.setGameMode(GameMode.ADVENTURE);
             player.setHealth(20);
             player.setFoodLevel(20);
-            player.getInventory().clear();
+            oneDayVaro.getItemManager().giveLobbyItems(player);
         }
     }
 
