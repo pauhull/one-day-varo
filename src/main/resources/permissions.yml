@@ -1,3 +1,4 @@
 SetLocation: odv.command.setlocation
 Options: odv.command.options
 Start: odv.command.start
+AddSpawn: odv.command.addspawn

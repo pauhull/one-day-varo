@@ -23,6 +23,8 @@ public class Locale {
     public static String LocationSet = "";
     public static String AlreadyIngame = "";
     public static String OptionChanged = "";
+    public static String SpawnAdd = "";
+    public static String TeamSizeChanged = "";
 
     public static void load() {
 

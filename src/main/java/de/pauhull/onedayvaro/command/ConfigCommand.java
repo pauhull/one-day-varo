@@ -14,14 +14,14 @@ import org.bukkit.entity.Player;
  *
  * @author pauhull
  */
-public class OptionsCommand implements CommandExecutor {
+public class ConfigCommand implements CommandExecutor {
 
     private OneDayVaro oneDayVaro;
 
-    public OptionsCommand(OneDayVaro oneDayVaro) {
+    public ConfigCommand(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        oneDayVaro.getCommand("options").setExecutor(this);
+        oneDayVaro.getCommand("config").setExecutor(this);
     }
 
     @Override

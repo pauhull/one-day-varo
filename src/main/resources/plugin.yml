@@ -6,5 +6,7 @@ softdepend: [CoinsAPI]
 
 commands:
   setlocation:
-  options:
+  config:
   start:
+  addspawn:
+  removespawn:

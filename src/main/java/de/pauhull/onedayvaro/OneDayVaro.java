@@ -1,6 +1,6 @@
 package de.pauhull.onedayvaro;
 
-import de.pauhull.onedayvaro.command.OptionsCommand;
+import de.pauhull.onedayvaro.command.ConfigCommand;
 import de.pauhull.onedayvaro.command.SetLocationCommand;
 import de.pauhull.onedayvaro.command.StartCommand;
 import de.pauhull.onedayvaro.display.VaroScoreboard;
@@ -9,6 +9,7 @@ import de.pauhull.onedayvaro.inventory.OptionsInventory;
 import de.pauhull.onedayvaro.listener.*;
 import de.pauhull.onedayvaro.manager.ItemManager;
 import de.pauhull.onedayvaro.manager.LocationManager;
+import de.pauhull.onedayvaro.manager.SpawnerManager;
 import de.pauhull.onedayvaro.util.CoinApiHook;
 import de.pauhull.onedayvaro.util.Locale;
 import de.pauhull.onedayvaro.util.Options;
@@ -73,6 +74,9 @@ public class OneDayVaro extends JavaPlugin {
     @Getter
     private ItemManager itemManager;
 
+    @Getter
+    private SpawnerManager spawnerManager;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -82,6 +86,7 @@ public class OneDayVaro extends JavaPlugin {
         this.scoreboardManager = new ScoreboardManager(this, VaroScoreboard.class);
         this.groupManager = new GroupManager(this);
         this.coinApiHook = new CoinApiHook();
+        this.spawnerManager = new SpawnerManager(this);
         this.locationManager = new LocationManager(this);
         this.config = copyAndLoad("config.yml", new File(getDataFolder(), "config.yml"));
         this.pluginEnabled = config.getBoolean("Enabled");
@@ -107,7 +112,7 @@ public class OneDayVaro extends JavaPlugin {
             new PlayerPickupItemListener(this);
             new PlayerQuitListener(this);
 
-            new OptionsCommand(this);
+            new ConfigCommand(this);
             new StartCommand(this);
         }
 
@@ -120,6 +125,10 @@ public class OneDayVaro extends JavaPlugin {
     @Override
     public void onDisable() {
         instance = null;
+
+        for (CustomScoreboard scoreboard : scoreboardManager.getScoreboards().values()) {
+            scoreboard.delete();
+        }
     }
 
     public FileConfiguration copyAndLoad(String resource, File copyTo) {
