@@ -22,9 +22,10 @@ public class OptionsInventory implements Listener {
 
     private static final String TITLE = "§cOptionen";
     private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.IRON_CHESTPLATE).displayName("§bTeamgröße ändern").build();
-    private static final ItemStack SCENARIOS = new ItemBuilder().material(Material.MAGMA_CREAM).displayName("§cSzenarios").build();
+    private static final ItemStack SCENARIOS = new ItemBuilder().material(Material.MAGMA_CREAM).displayName("§9Szenarios").build();
     private static final ItemStack START = new ItemBuilder().material(Material.EMERALD).displayName("§aSpiel starten").build();
     private static final ItemStack NETHER = new ItemBuilder().material(Material.NETHERRACK).displayName("§cNether an/aus").build();
+    private static final ItemStack PROTECTION_PERIOD = new ItemBuilder().material(Material.WATCH).displayName("§dSchutzzeit").build();
 
     private TeamSizeInventory teamSizeInventory;
     private OneDayVaro oneDayVaro;
@@ -40,10 +41,11 @@ public class OptionsInventory implements Listener {
 
         Inventory inventory = Bukkit.createInventory(null, 27, TITLE);
 
-        inventory.setItem(9 + 1, TEAM_SIZE);
-        inventory.setItem(9 + 3, START);
-        inventory.setItem(9 + 5, SCENARIOS);
-        inventory.setItem(9 + 7, NETHER);
+        inventory.setItem(9, TEAM_SIZE);
+        inventory.setItem(9 + 2, START);
+        inventory.setItem(9 + 4, SCENARIOS);
+        inventory.setItem(9 + 6, NETHER);
+        inventory.setItem(9 + 8, PROTECTION_PERIOD);
 
         player.openInventory(inventory);
         player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1, 1);

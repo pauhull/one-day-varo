@@ -28,4 +28,40 @@ public class Options {
         this.scenarios = new ArrayList<>();
     }
 
+    public enum ProtectionPeriod {
+
+        NONE(0, 0, "keine"),
+        FIVE_MINUTES(1, 5 * 60, "5 Minuten"),
+        TEN_MINUTES(2, 10 * 60, "10 Minuten"),
+        TWENTY_MINUTES(3, 20 * 60, "20 Minuten"),
+        THIRTY_MINUTES(4, 30 * 60, "30 Minuten");
+
+        @Getter
+        private int id;
+
+        @Getter
+        private int seconds;
+
+        @Getter
+        private String name;
+
+        ProtectionPeriod(int id, int seconds, String name) {
+            this.id = id;
+            this.seconds = seconds;
+            this.name = name;
+        }
+
+        public static ProtectionPeriod getById(int id) {
+
+            for (ProtectionPeriod protectionPeriod : values()) {
+                if (protectionPeriod.getId() == id) {
+                    return protectionPeriod;
+                }
+            }
+
+            return null;
+        }
+
+    }
+
 }

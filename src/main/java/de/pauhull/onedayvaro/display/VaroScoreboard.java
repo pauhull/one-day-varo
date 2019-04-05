@@ -67,7 +67,12 @@ public class VaroScoreboard extends CustomScoreboard {
             if (teamName.length() > 16) {
                 teamName = teamName.substring(0, 16);
             }
-            Team team = scoreboard.registerNewTeam(teamName);
+
+            Team team = scoreboard.getTeam(teamName);
+            if (team == null) {
+                team = scoreboard.registerNewTeam(teamName);
+            }
+
             String prefix = group.getTablistPrefix();
             if (prefix.length() > 16) {
                 prefix = prefix.substring(0, 16);
