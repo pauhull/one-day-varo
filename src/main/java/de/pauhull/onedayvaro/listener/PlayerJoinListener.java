@@ -42,6 +42,9 @@ public class PlayerJoinListener implements Listener {
             player.setGameMode(GameMode.ADVENTURE);
             player.setHealth(20);
             player.setFoodLevel(20);
+            player.setExp(0);
+            player.setLevel(0);
+            player.setFireTicks(0);
             oneDayVaro.getItemManager().giveLobbyItems(player);
         }
     }

@@ -17,6 +17,10 @@ public class Permissions {
     public static String SetLocation = "";
     public static String Options = "";
     public static String Start = "";
+    public static String AddSpawn = "";
+    public static String Globalmute = "";
+    public static String GlobalmuteBypass = "";
+    public static String Teams = "";
 
     public static void load() {
 
@@ -32,6 +36,8 @@ public class Permissions {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
+            } else {
+                System.err.println("[ODVPlugin] Missing field in permissions.yml: \"" + field.getName() + "\"");
             }
         }
     }

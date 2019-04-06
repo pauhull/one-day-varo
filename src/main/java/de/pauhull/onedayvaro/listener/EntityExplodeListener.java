@@ -4,30 +4,29 @@ import de.pauhull.onedayvaro.OneDayVaro;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 /**
  * Created by Paul
- * on 01.04.2019
+ * on 05.04.2019
  *
  * @author pauhull
  */
-public class EntityDamageListener implements Listener {
+public class EntityExplodeListener implements Listener {
 
     private OneDayVaro oneDayVaro;
 
-    public EntityDamageListener(OneDayVaro oneDayVaro) {
+    public EntityExplodeListener(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
         Bukkit.getPluginManager().registerEvents(this, oneDayVaro);
     }
 
     @EventHandler
-    public void onEntityDamage(EntityDamageEvent event) {
+    public void onEntityExplode(EntityExplodeEvent event) {
 
-        if (!oneDayVaro.getIngamePhase().isCanBuild()) {
-            event.setCancelled(true);
-            event.setDamage(0);
+        if (!oneDayVaro.isIngame()) {
+            event.blockList().clear();
         }
     }
 

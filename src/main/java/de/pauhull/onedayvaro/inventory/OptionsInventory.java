@@ -26,14 +26,17 @@ public class OptionsInventory implements Listener {
     private static final ItemStack START = new ItemBuilder().material(Material.EMERALD).displayName("§aSpiel starten").build();
     private static final ItemStack NETHER = new ItemBuilder().material(Material.NETHERRACK).displayName("§cNether an/aus").build();
     private static final ItemStack PROTECTION_PERIOD = new ItemBuilder().material(Material.WATCH).displayName("§dSchutzzeit").build();
+    private static final ItemStack WORLD = new ItemBuilder().material(Material.GRASS).displayName("§aWelt auswählen").build();
 
     private TeamSizeInventory teamSizeInventory;
-    private OneDayVaro oneDayVaro;
+    private ProtectionPeriodInventory protectionPeriodInventory;
+    private WorldInventory worldInventory;
 
     public OptionsInventory(OneDayVaro oneDayVaro) {
 
-        this.oneDayVaro = oneDayVaro;
         this.teamSizeInventory = new TeamSizeInventory(oneDayVaro);
+        this.protectionPeriodInventory = new ProtectionPeriodInventory(oneDayVaro);
+        this.worldInventory = new WorldInventory(oneDayVaro);
         Bukkit.getPluginManager().registerEvents(this, oneDayVaro);
     }
 
@@ -42,8 +45,9 @@ public class OptionsInventory implements Listener {
         Inventory inventory = Bukkit.createInventory(null, 27, TITLE);
 
         inventory.setItem(9, TEAM_SIZE);
-        inventory.setItem(9 + 2, START);
-        inventory.setItem(9 + 4, SCENARIOS);
+        inventory.setItem(9 + 1, WORLD);
+        inventory.setItem(9 + 2, SCENARIOS);
+        inventory.setItem(9 + 4, START);
         inventory.setItem(9 + 6, NETHER);
         inventory.setItem(9 + 8, PROTECTION_PERIOD);
 
@@ -71,6 +75,10 @@ public class OptionsInventory implements Listener {
                 Bukkit.dispatchCommand(player, "start");
             } else if (stack.equals(SCENARIOS)) {
 
+            } else if (stack.equals(PROTECTION_PERIOD)) {
+                protectionPeriodInventory.show(player);
+            } else if (stack.equals(WORLD)) {
+                worldInventory.show(player);
             }
         }
     }

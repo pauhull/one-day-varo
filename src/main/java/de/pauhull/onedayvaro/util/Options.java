@@ -3,6 +3,7 @@ package de.pauhull.onedayvaro.util;
 import de.pauhull.onedayvaro.scenario.Scenario;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,19 @@ public class Options {
     @Setter
     private List<Scenario> scenarios;
 
+    @Getter
+    @Setter
+    private ProtectionPeriod protectionPeriod;
+
+    @Getter
+    @Setter
+    private World world;
+
     public Options() {
         this.teamSize = 1;
         this.scenarios = new ArrayList<>();
+        this.protectionPeriod = ProtectionPeriod.FIVE_MINUTES;
+        this.world = null;
     }
 
     public enum ProtectionPeriod {

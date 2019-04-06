@@ -25,7 +25,7 @@ public class BlockPlaceListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockPlaceEvent event) {
 
-        if (!oneDayVaro.isIngame()) {
+        if (!oneDayVaro.getIngamePhase().isCanBuild()) {
             event.setCancelled(true);
         }
     }

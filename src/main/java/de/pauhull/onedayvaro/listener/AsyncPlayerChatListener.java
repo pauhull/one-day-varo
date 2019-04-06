@@ -2,6 +2,8 @@ package de.pauhull.onedayvaro.listener;
 
 import de.pauhull.onedayvaro.OneDayVaro;
 import de.pauhull.onedayvaro.group.Group;
+import de.pauhull.onedayvaro.util.Locale;
+import de.pauhull.onedayvaro.util.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,6 +30,14 @@ public class AsyncPlayerChatListener implements Listener {
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
 
         Player player = event.getPlayer();
+
+        if (!player.hasPermission(Permissions.GlobalmuteBypass) && oneDayVaro.isGlobalMute()) {
+
+            event.setCancelled(true);
+            player.sendMessage(Locale.NoChat);
+            return;
+        }
+
         Group group = oneDayVaro.getGroupManager().getGroup(player);
 
         if (group == null) {

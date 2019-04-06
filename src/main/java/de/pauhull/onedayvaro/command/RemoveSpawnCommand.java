@@ -15,14 +15,14 @@ import org.bukkit.entity.Player;
  *
  * @author pauhull
  */
-public class AddSpawnCommand implements CommandExecutor {
+public class RemoveSpawnCommand implements CommandExecutor {
 
     private OneDayVaro oneDayVaro;
 
-    public AddSpawnCommand(OneDayVaro oneDayVaro) {
+    public RemoveSpawnCommand(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        oneDayVaro.getCommand("addspawn").setExecutor(this);
+        oneDayVaro.getCommand("removespawn").setExecutor(this);
     }
 
     @Override
@@ -39,9 +39,16 @@ public class AddSpawnCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         World world = player.getWorld();
-        oneDayVaro.getSpawnerManager().addSpawn(world, player.getLocation());
+
         String id = Integer.toString(oneDayVaro.getSpawnerManager().getSpawns(world).size());
-        player.sendMessage(Locale.SpawnSet.replace("%ID%", id).replace("%WORLD%", world.getName()));
+
+        if (id.equals("0")) {
+            sender.sendMessage(Locale.NoSpawns);
+            return true;
+        }
+
+        oneDayVaro.getSpawnerManager().removeLastSpawn(world);
+        sender.sendMessage(Locale.SpawnRemoved.replace("%ID%", id).replace("%WORLD%", world.getName()));
 
         return true;
     }

@@ -1,6 +1,8 @@
 package de.pauhull.onedayvaro.util;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -15,45 +17,69 @@ import java.util.Arrays;
 public class ItemBuilder {
 
     private ItemStack stack;
+    private ItemMeta meta;
 
     public ItemBuilder() {
-        this(null);
     }
 
     public ItemBuilder(ItemStack stack) {
-        this.stack = stack;
+
+        this.stack = stack == null ? null : stack.clone();
+        this.meta = stack == null ? null : stack.getItemMeta();
     }
 
     public ItemBuilder material(Material material) {
-        stack = new ItemStack(material);
+
+        this.stack = new ItemStack(material);
+        this.meta = stack.getItemMeta();
         return this;
     }
 
     public ItemBuilder amount(int amount) {
+
         stack.setAmount(amount);
         return this;
     }
 
     public ItemBuilder data(int durability) {
+
         stack.setDurability((short) durability);
         return this;
     }
 
     public ItemBuilder displayName(String displayName) {
-        ItemMeta meta = stack.getItemMeta();
+
         meta.setDisplayName(displayName);
-        stack.setItemMeta(meta);
         return this;
     }
 
     public ItemBuilder lore(String... lore) {
-        ItemMeta meta = stack.getItemMeta();
+
         meta.setLore(Arrays.asList(lore));
-        stack.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder enchant(Enchantment enchantment, int level, boolean unsafe) {
+
+        meta.addEnchant(enchantment, level, unsafe);
+        return this;
+    }
+
+    public ItemBuilder flag(ItemFlag... flags) {
+
+        meta.addItemFlags(flags);
+        return this;
+    }
+
+    public ItemBuilder unbreakable() {
+
+        meta.spigot().setUnbreakable(true);
         return this;
     }
 
     public ItemStack build() {
+
+        stack.setItemMeta(meta);
         return stack;
     }
 

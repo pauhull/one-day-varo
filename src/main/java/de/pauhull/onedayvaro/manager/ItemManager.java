@@ -4,6 +4,7 @@ import de.pauhull.onedayvaro.util.ItemBuilder;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -22,7 +23,13 @@ public class ItemManager {
 
     public ItemManager() {
         this.backToLobby = new ItemBuilder().material(Material.SLIME_BALL).displayName("§cZurück zur Lobby").build();
-        this.inviteToTeam = new ItemBuilder().material(Material.IRON_SWORD).displayName("§bZu Team einladen").build();
+        this.inviteToTeam = new ItemBuilder()
+                .material(Material.IRON_SWORD)
+                .displayName("§bZu Team einladen")
+                .flag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
+                .lore("§8» §7Linksklick: Spieler einladen", "§8» §7Rechtsklick: Team-Optionen")
+                .unbreakable()
+                .build();
     }
 
     public void giveLobbyItems(Player player) {

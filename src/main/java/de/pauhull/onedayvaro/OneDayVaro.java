@@ -1,15 +1,15 @@
 package de.pauhull.onedayvaro;
 
-import de.pauhull.onedayvaro.command.ConfigCommand;
-import de.pauhull.onedayvaro.command.SetLocationCommand;
-import de.pauhull.onedayvaro.command.StartCommand;
+import de.pauhull.onedayvaro.command.*;
 import de.pauhull.onedayvaro.display.VaroScoreboard;
 import de.pauhull.onedayvaro.group.GroupManager;
 import de.pauhull.onedayvaro.inventory.OptionsInventory;
+import de.pauhull.onedayvaro.inventory.TeamInventory;
 import de.pauhull.onedayvaro.listener.*;
 import de.pauhull.onedayvaro.manager.ItemManager;
 import de.pauhull.onedayvaro.manager.LocationManager;
 import de.pauhull.onedayvaro.manager.SpawnerManager;
+import de.pauhull.onedayvaro.phase.IngamePhase;
 import de.pauhull.onedayvaro.util.CoinApiHook;
 import de.pauhull.onedayvaro.util.Locale;
 import de.pauhull.onedayvaro.util.Options;
@@ -77,6 +77,16 @@ public class OneDayVaro extends JavaPlugin {
     @Getter
     private SpawnerManager spawnerManager;
 
+    @Getter
+    private IngamePhase ingamePhase;
+
+    @Getter
+    @Setter
+    private boolean globalMute;
+
+    @Getter
+    private TeamInventory teamInventory;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -91,6 +101,8 @@ public class OneDayVaro extends JavaPlugin {
         this.config = copyAndLoad("config.yml", new File(getDataFolder(), "config.yml"));
         this.pluginEnabled = config.getBoolean("Enabled");
         this.optionsInventory = new OptionsInventory(this);
+        this.ingamePhase = new IngamePhase(this);
+        this.teamInventory = new TeamInventory(this);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             scoreboardManager.updateTeam(player);
@@ -100,12 +112,16 @@ public class OneDayVaro extends JavaPlugin {
         }
 
         if (pluginEnabled) {
+
             new AsyncPlayerChatListener(this);
             new BlockBreakListener(this);
             new BlockPlaceListener(this);
+            new EntityDamageByEntityListener(this);
             new EntityDamageListener(this);
+            new EntityExplodeListener(this);
             new FoodLevelChangeListener(this);
             new InventoryClickListener(this);
+            new PlayerAchievementAwardedListener(this);
             new PlayerDropItemListener(this);
             new PlayerInteractListener(this);
             new PlayerJoinListener(this);
@@ -114,8 +130,12 @@ public class OneDayVaro extends JavaPlugin {
 
             new ConfigCommand(this);
             new StartCommand(this);
+            new TeamsCommand(this);
+            new GlobalMuteCommand(this);
         }
 
+        new AddSpawnCommand(this);
+        new RemoveSpawnCommand(this);
         new SetLocationCommand(this);
 
         Locale.load();

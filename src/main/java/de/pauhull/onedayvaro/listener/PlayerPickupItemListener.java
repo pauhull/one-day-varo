@@ -25,7 +25,7 @@ public class PlayerPickupItemListener implements Listener {
     @EventHandler
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 
-        if (!this.oneDayVaro.isIngame()) {
+        if (oneDayVaro.getIngamePhase().isCanBuild()) {
             event.setCancelled(true);
         }
     }

@@ -4,31 +4,27 @@ import de.pauhull.onedayvaro.OneDayVaro;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 
 /**
  * Created by Paul
- * on 01.04.2019
+ * on 05.04.2019
  *
  * @author pauhull
  */
-public class EntityDamageListener implements Listener {
+public class PlayerAchievementAwardedListener implements Listener {
 
     private OneDayVaro oneDayVaro;
 
-    public EntityDamageListener(OneDayVaro oneDayVaro) {
+    public PlayerAchievementAwardedListener(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
         Bukkit.getPluginManager().registerEvents(this, oneDayVaro);
     }
 
     @EventHandler
-    public void onEntityDamage(EntityDamageEvent event) {
+    public void onPlayerAchievementAwarded(PlayerAchievementAwardedEvent event) {
 
-        if (!oneDayVaro.getIngamePhase().isCanBuild()) {
-            event.setCancelled(true);
-            event.setDamage(0);
-        }
+        event.setCancelled(true);
     }
-
 }

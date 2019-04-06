@@ -2,3 +2,6 @@ SetLocation: odv.command.setlocation
 Options: odv.command.options
 Start: odv.command.start
 AddSpawn: odv.command.addspawn
+Globalmute: odv.command.globalmute
+GlobalmuteBypass: odv.globalmute.bypass
+Teams: odv.command.teams

@@ -7,11 +7,13 @@ import de.pauhull.onedayvaro.util.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -23,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 public class TeamSizeInventory implements Listener {
 
     private static final String TITLE = "§cTeamgröße auswählen";
-    private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.PAPER).displayName("§eTeamgröße: ").lore(" ", " §a§lKlicken zum bestätigen", " ").build();
+    private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.PAPER).displayName("§eTeamgröße: ").lore(" ", " §5§lKlicken zum Auswählen", " ").build();
 
     private OneDayVaro oneDayVaro;
 
@@ -38,7 +40,14 @@ public class TeamSizeInventory implements Listener {
         Inventory inventory = Bukkit.createInventory(null, 27, TITLE);
 
         for (int i = 0; i < 5; i++) {
-            inventory.setItem(11 + i, new ItemBuilder(TEAM_SIZE).displayName("§eTeamgröße:§f " + (i + 1)).amount(i + 1).build());
+            ItemBuilder builder = new ItemBuilder(TEAM_SIZE);
+
+            if (i + 1 == oneDayVaro.getOptions().getTeamSize()) {
+                builder.material(Material.EMPTY_MAP).lore(" ", " §a§lAusgewählt", " ").enchant(Enchantment.DURABILITY, 10, true).flag(ItemFlag.HIDE_ENCHANTS);
+            }
+
+            builder.displayName("§eTeamgröße:§f " + (i + 1)).amount(i + 1);
+            inventory.setItem(11 + i, builder.build());
         }
 
         player.openInventory(inventory);

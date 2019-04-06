@@ -8,11 +8,13 @@ import de.pauhull.onedayvaro.util.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -24,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 public class ProtectionPeriodInventory implements Listener {
 
     private static final String TITLE = "§cSchutzzeit auswählen";
-    private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.PAPER).displayName("§eSchutzzeit: ").lore(" ", " §a§lKlicken zum bestätigen", " ").build();
+    private static final ItemStack PROTECTION_PERIOD = new ItemBuilder().material(Material.PAPER).displayName("§eSchutzzeit: ").lore(" ", " §5§lKlicken zum Auswählen", " ").build();
 
     private OneDayVaro oneDayVaro;
 
@@ -42,7 +44,14 @@ public class ProtectionPeriodInventory implements Listener {
             ProtectionPeriod protectionPeriod = ProtectionPeriod.getById(i);
 
             if (protectionPeriod != null) {
-                inventory.setItem(11 + i, new ItemBuilder(TEAM_SIZE).displayName("§eSchutzzeit:§f " + protectionPeriod.getName()).build());
+                ItemBuilder builder = new ItemBuilder(PROTECTION_PERIOD);
+
+                if (protectionPeriod == oneDayVaro.getOptions().getProtectionPeriod()) {
+                    builder.material(Material.EMPTY_MAP).lore(" ", " §a§lAusgewählt", " ").enchant(Enchantment.DURABILITY, 10, true).flag(ItemFlag.HIDE_ENCHANTS);
+                }
+
+                builder.displayName("§eSchutzzeit:§f " + protectionPeriod.getName());
+                inventory.setItem(11 + i, builder.build());
             }
         }
 
@@ -65,13 +74,19 @@ public class ProtectionPeriodInventory implements Listener {
 
         if (stack != null) {
 
-            if (stack.getType() == TEAM_SIZE.getType()) {
+            if (stack.getType() == PROTECTION_PERIOD.getType()) {
                 if (player.hasPermission(Permissions.Options)) {
-                    player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
-                    player.sendMessage(Locale.OptionChanged);
-                    oneDayVaro.getOptions().setTeamSize(stack.getAmount());
-                    oneDayVaro.getOptionsInventory().show(player);
-                    Bukkit.broadcastMessage(Locale.TeamSizeChanged.replace("%SIZE%", Integer.toString(oneDayVaro.getOptions().getTeamSize())));
+
+                    ProtectionPeriod protectionPeriod = ProtectionPeriod.getById(event.getRawSlot() - 11);
+
+                    if (protectionPeriod != null) {
+
+                        player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
+                        player.sendMessage(Locale.OptionChanged);
+                        oneDayVaro.getOptions().setProtectionPeriod(protectionPeriod);
+                        oneDayVaro.getOptionsInventory().show(player);
+                        Bukkit.broadcastMessage(Locale.ProtectionPeriodChanged.replace("%PERIOD%", protectionPeriod.getName()));
+                    }
                 }
             }
         }

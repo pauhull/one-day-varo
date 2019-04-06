@@ -10,3 +10,5 @@ commands:
   start:
   addspawn:
   removespawn:
+  globalmute:
+  teams:

@@ -1,6 +1,7 @@
 package de.pauhull.onedayvaro.listener;
 
 import de.pauhull.onedayvaro.OneDayVaro;
+import de.pauhull.onedayvaro.team.Team;
 import de.pauhull.onedayvaro.util.Locale;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,6 +34,22 @@ public class PlayerQuitListener implements Listener {
             event.setQuitMessage(null);
         } else {
             event.setQuitMessage(Locale.LobbyLeave.replace("%PLAYER%", player.getName()));
+        }
+
+        for (Team team : Team.getAllTeams()) {
+            team.getInvited().remove(player);
+        }
+
+        Team team = Team.getTeam(player);
+
+        if (team != null) {
+            if (team.getOwner() == player) {
+                team.broadcast(Locale.TeamDeleted);
+                team.delete();
+            } else {
+                team.broadcast(Locale.LeftTeam.replace("%PLAYER%", player.getName()));
+                team.getMembers().remove(player);
+            }
         }
     }
 
