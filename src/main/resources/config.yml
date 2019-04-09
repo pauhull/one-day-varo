@@ -1,1 +1,20 @@
 Enabled: false
+
+StarterItems:
+  DIAMOND_PICKAXE: 1
+  WATER_BUCKET: 1
+  LOG: 16
+  APPLE: 10
+  BOOK: 4
+  OBSIDIAN: 4
+  COOKED_BEEF: 64
+  LAPIS_BLOCK: 4
+  COBBLESTONE: 64
+
+# %PLAYER%, %KILLS%, %DEATHS%, %WINS%, %PLAYED_GAMES%, %KD%, %RANK%
+
+TopSignFormat:
+  1: "%RANK%. &4%PLAYER%"
+  2: "Wins: &1%WINS%"
+  3: "Kills: %KILLS%"
+  4: "Spiele: &5%PLAYED_GAMES%"

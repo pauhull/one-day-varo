@@ -38,11 +38,6 @@ public class ConfigCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (oneDayVaro.isIngame()) {
-            player.sendMessage(Locale.AlreadyIngame);
-            return true;
-        }
-
         oneDayVaro.getOptionsInventory().show(player);
 
         return true;

@@ -1,6 +1,7 @@
 package de.pauhull.onedayvaro.inventory;
 
 import de.pauhull.onedayvaro.OneDayVaro;
+import de.pauhull.onedayvaro.team.Team;
 import de.pauhull.onedayvaro.util.ItemBuilder;
 import de.pauhull.onedayvaro.util.Locale;
 import de.pauhull.onedayvaro.util.Permissions;
@@ -76,6 +77,17 @@ public class TeamSizeInventory implements Listener {
                     oneDayVaro.getOptions().setTeamSize(stack.getAmount());
                     oneDayVaro.getOptionsInventory().show(player);
                     Bukkit.broadcastMessage(Locale.TeamSizeChanged.replace("%SIZE%", Integer.toString(oneDayVaro.getOptions().getTeamSize())));
+
+                    if (oneDayVaro.getOptions().getTeamSize() == 1) {
+                        Team.getAllTeams().forEach(Team::delete);
+                    } else if (oneDayVaro.getOptions().getTeamSize() < 5) {
+
+                        for (Team team : Team.getAllTeams()) {
+                            while (team.getMembers().size() > oneDayVaro.getOptions().getTeamSize()) {
+                                team.getMembers().remove(team.getMembers().get(team.getMembers().size() - 1));
+                            }
+                        }
+                    }
                 }
             }
         }

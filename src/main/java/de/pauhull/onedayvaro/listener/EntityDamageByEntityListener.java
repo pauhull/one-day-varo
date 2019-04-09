@@ -28,10 +28,6 @@ public class EntityDamageByEntityListener implements Listener {
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
 
-        if (oneDayVaro.isIngame()) {
-            return;
-        }
-
         if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
             return;
         }
@@ -39,78 +35,84 @@ public class EntityDamageByEntityListener implements Listener {
         Player damaged = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();
 
-        if (!oneDayVaro.getItemManager().getInviteToTeam().equals(damager.getItemInHand())) {
-            return;
-        }
-
-        event.setCancelled(true);
-        event.setDamage(0);
-
-        if (oneDayVaro.getOptions().getTeamSize() <= 1) {
-
-            damager.sendMessage(Locale.OnlyFFA);
-            return;
-        }
-
         Team damagerTeam = Team.getTeam(damager);
         Team damagedTeam = Team.getTeam(damaged);
 
-        if (damagedTeam != null && damagedTeam.getInvited().contains(damager)) {
-
-            damagedTeam.getInvited().remove(damager);
-            damagedTeam.getMembers().add(damager);
-            damagedTeam.broadcast(Locale.JoinedTeam.replace("%PLAYER%", damager.getName()));
-
-            return;
+        if ((damagerTeam != null && damagerTeam == damagedTeam) || oneDayVaro.getIngamePhase().isGracePeriod()) {
+            event.setCancelled(true);
+            event.setDamage(0);
         }
 
-        if (damagedTeam == null) {
+        if (oneDayVaro.getItemManager().getInviteToTeam().equals(damager.getItemInHand()) && !oneDayVaro.isIngame()) {
 
-            if (damagerTeam == null) {
-                damagerTeam = Team.create(damager);
-                damager.sendMessage(Locale.TeamCreated);
-            }
+            event.setCancelled(true);
+            event.setDamage(0);
 
-            if (damager != damagerTeam.getOwner()) {
-                damager.sendMessage(Locale.NoInvites);
+            if (oneDayVaro.getOptions().getTeamSize() <= 1) {
+
+                damager.sendMessage(Locale.OnlyFFA);
                 return;
             }
 
-            if (damagerTeam.getInvited().contains(damaged)) {
+            if (damagedTeam != null && damagedTeam.getInvited().contains(damager)) {
 
-                damagerTeam.getInvited().remove(damaged);
-                damaged.sendMessage(Locale.UninviteReceived.replace("%PLAYER%", damager.getName()));
-                damager.sendMessage(Locale.UninviteSent.replace("%PLAYER%", damaged.getName()));
+                if (damagedTeam.getMembers().size() >= oneDayVaro.getOptions().getTeamSize()) {
 
-            } else {
+                    damagedTeam.getInvited().remove(damager);
+                    damager.sendMessage(Locale.TeamFull);
 
-                damagerTeam.getInvited().add(damaged);
-                damaged.sendMessage(Locale.InviteReceived.replace("%PLAYER%", damager.getName()));
-                damager.sendMessage(Locale.InviteSent.replace("%PLAYER%", damaged.getName()));
-
-            }
-        } else {
-
-            if (damagedTeam == damagerTeam) {
-
-                if (damager == damagerTeam.getOwner()) {
-
-                    damagerTeam.getMembers().remove(damaged);
-                    damager.sendMessage(Locale.RemovedFromTeam.replace("%PLAYER%", damaged.getName()));
-                    damagerTeam.broadcast(Locale.LeftTeam.replace("%PLAYER%", damaged.getName()));
-
-                } else {
-
-                    damager.sendMessage(Locale.AlreadyInTeam);
-
+                    return;
                 }
 
-            } else {
+                damagedTeam.getInvited().remove(damager);
+                damagedTeam.getMembers().add(damager);
+                damagedTeam.broadcast(Locale.JoinedTeam.replace("%PLAYER%", damager.getName()));
 
-                damager.sendMessage(Locale.NotInYourTeam);
-
+                return;
             }
 
+            if (damagedTeam == null) {
+
+                if (damagerTeam == null) {
+                    damagerTeam = Team.create(damager);
+                    damager.sendMessage(Locale.TeamCreated);
+                }
+
+                if (damager != damagerTeam.getOwner()) {
+                    damager.sendMessage(Locale.NoInvites);
+                    return;
+                }
+
+                if (damagerTeam.getInvited().contains(damaged)) {
+
+                    damagerTeam.getInvited().remove(damaged);
+                    damaged.sendMessage(Locale.UninviteReceived.replace("%PLAYER%", damager.getName()));
+                    damager.sendMessage(Locale.UninviteSent.replace("%PLAYER%", damaged.getName()));
+                } else {
+
+                    damagerTeam.getInvited().add(damaged);
+                    damaged.sendMessage(Locale.InviteReceived.replace("%PLAYER%", damager.getName()));
+                    damager.sendMessage(Locale.InviteSent.replace("%PLAYER%", damaged.getName()));
+                }
+            } else {
+
+                if (damagedTeam == damagerTeam) {
+
+                    if (damager == damagerTeam.getOwner()) {
+
+                        damagerTeam.getMembers().remove(damaged);
+                        damager.sendMessage(Locale.RemovedFromTeam.replace("%PLAYER%", damaged.getName()));
+                        damagerTeam.broadcast(Locale.LeftTeam.replace("%PLAYER%", damaged.getName()));
+
+                    } else {
+
+                        damager.sendMessage(Locale.AlreadyInTeam);
+                    }
+                } else {
+
+                    damager.sendMessage(Locale.NotInYourTeam);
+                }
+            }
         }
     }
 }

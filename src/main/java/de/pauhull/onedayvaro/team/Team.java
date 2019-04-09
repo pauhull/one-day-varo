@@ -1,6 +1,5 @@
 package de.pauhull.onedayvaro.team;
 
-import de.pauhull.onedayvaro.OneDayVaro;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -44,14 +43,15 @@ public class Team {
 
         List<Player> members = new ArrayList<>();
         members.add(owner);
-        Team team = new Team(owner, members, new ArrayList<>(), owner.getName());
+        Team team = new Team(owner, members, new ArrayList<>(), "#EliteEmpire");
         allTeams.add(team);
-        OneDayVaro.getInstance().getScoreboardManager().updateTeam(owner);
 
         return team;
     }
 
     public static Team getTeam(Player player) {
+
+        if (player == null) return null;
 
         for (Team team : allTeams) {
             if (team.getMembers().contains(player)) {

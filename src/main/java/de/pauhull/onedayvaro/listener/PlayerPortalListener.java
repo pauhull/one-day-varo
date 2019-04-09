@@ -4,28 +4,22 @@ import de.pauhull.onedayvaro.OneDayVaro;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 
-/**
- * Created by Paul
- * on 01.04.2019
- *
- * @author pauhull
- */
-public class PlayerPickupItemListener implements Listener {
+public class PlayerPortalListener implements Listener {
 
     private OneDayVaro oneDayVaro;
 
-    public PlayerPickupItemListener(OneDayVaro oneDayVaro) {
+    public PlayerPortalListener(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
         Bukkit.getPluginManager().registerEvents(this, oneDayVaro);
     }
 
     @EventHandler
-    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+    public void onPlayerPortal(PlayerPortalEvent event) {
 
-        if (!oneDayVaro.getIngamePhase().isCanBuild()) {
+        if (!oneDayVaro.getOptions().isNether()) {
             event.setCancelled(true);
         }
     }

@@ -4,6 +4,8 @@ main: de.pauhull.onedayvaro.OneDayVaro
 author: pauhull
 softdepend: [CoinsAPI]
 
+load: POSTWORLD
+
 commands:
   setlocation:
   config:

@@ -32,11 +32,21 @@ public class Options {
     @Setter
     private World world;
 
+    @Getter
+    @Setter
+    private boolean nether;
+
+    @Getter
+    @Setter
+    private int border;
+
     public Options() {
         this.teamSize = 1;
         this.scenarios = new ArrayList<>();
         this.protectionPeriod = ProtectionPeriod.FIVE_MINUTES;
         this.world = null;
+        this.nether = true;
+        this.border = 1500;
     }
 
     public enum ProtectionPeriod {

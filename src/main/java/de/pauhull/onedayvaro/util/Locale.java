@@ -53,6 +53,22 @@ public class Locale {
     public static String GameStartsIn = "";
     public static String GameStarted = "";
     public static String GracePeriodEnd = "";
+    public static String NetherEnabled = "";
+    public static String NetherDisabled = "";
+    public static String CoinsAdded = "";
+    public static String BorderChanged = "";
+    public static String NotEnoughPlayers = "";
+    public static String ScenarioDisabled = "";
+    public static String ScenarioEnabled = "";
+    public static String GracePeriodEndsIn = "";
+    public static String PlayerWonGame = "";
+    public static String TeamWonGame = "";
+    public static String TopKills = "";
+    public static String SignPlaced = "";
+    public static String SignDestroyed = "";
+    public static String InvalidNumber = "";
+    public static String ServerRestartsIn = "";
+    public static String TeamFull = "";
 
     public static void load() {
 

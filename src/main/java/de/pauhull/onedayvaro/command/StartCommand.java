@@ -3,6 +3,7 @@ package de.pauhull.onedayvaro.command;
 import de.pauhull.onedayvaro.OneDayVaro;
 import de.pauhull.onedayvaro.util.Locale;
 import de.pauhull.onedayvaro.util.Permissions;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,6 +36,13 @@ public class StartCommand implements CommandExecutor {
             sender.sendMessage(Locale.NotAnySpawns);
             return true;
         }
+
+        if (Bukkit.getOnlinePlayers().size() < oneDayVaro.getOptions().getTeamSize() + 1) {
+            sender.sendMessage(Locale.NotEnoughPlayers);
+            return true;
+        }
+
+        oneDayVaro.getIngamePhase().start();
 
         return true;
     }

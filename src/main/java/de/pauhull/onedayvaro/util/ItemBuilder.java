@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Paul
@@ -53,10 +54,15 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder lore(List<String> lore) {
+
+        meta.setLore(lore);
+        return this;
+    }
+
     public ItemBuilder lore(String... lore) {
 
-        meta.setLore(Arrays.asList(lore));
-        return this;
+        return lore(Arrays.asList(lore));
     }
 
     public ItemBuilder enchant(Enchantment enchantment, int level, boolean unsafe) {

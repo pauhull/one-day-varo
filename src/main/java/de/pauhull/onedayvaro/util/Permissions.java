@@ -21,6 +21,8 @@ public class Permissions {
     public static String Globalmute = "";
     public static String GlobalmuteBypass = "";
     public static String Teams = "";
+    public static String FullJoin = "";
+    public static String CreateSign = "";
 
     public static void load() {
 

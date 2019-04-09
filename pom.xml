@@ -8,6 +8,17 @@
     <artifactId>one-day-varo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>candycraft-repo</id>
+            <url>https://repo.morx.me/repository/internal</url>
+        </repository>
+        <repository>
+            <id>wesjd-repo</id>
+            <url>https://nexus.wesjd.net/repository/thirdparty/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
 
         <dependency>

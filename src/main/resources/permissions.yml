@@ -5,3 +5,5 @@ AddSpawn: odv.command.addspawn
 Globalmute: odv.command.globalmute
 GlobalmuteBypass: odv.globalmute.bypass
 Teams: odv.command.teams
+FullJoin: odv.team.fulljoin
+CreateSign: odv.sign.create

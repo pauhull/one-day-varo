@@ -30,6 +30,13 @@ public class PlayerQuitListener implements Listener {
 
         Player player = event.getPlayer();
 
+        oneDayVaro.getIngamePhase().getSpectators().remove(player);
+
+        if (oneDayVaro.isIngame() && !oneDayVaro.getIngamePhase().isCanBuild() && Bukkit.getOnlinePlayers().size() - 1 == 0) {
+            Bukkit.getServer().spigot().restart();
+            return;
+        }
+
         if (oneDayVaro.isIngame()) {
             event.setQuitMessage(null);
         } else {
@@ -51,6 +58,10 @@ public class PlayerQuitListener implements Listener {
                 team.getMembers().remove(player);
             }
         }
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> {
+            oneDayVaro.getIngamePhase().checkForWin();
+        }, 0);
     }
 
 }

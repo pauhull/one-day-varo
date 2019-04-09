@@ -35,6 +35,7 @@ public class PlayerJoinListener implements Listener {
             event.setJoinMessage(null);
             oneDayVaro.getLocationManager().teleport("Spectator", player);
             player.setGameMode(GameMode.SPECTATOR);
+            oneDayVaro.getIngamePhase().getSpectators().add(player);
         } else {
 
             event.setJoinMessage(Locale.LobbyJoin.replace("%PLAYER%", player.getName()));

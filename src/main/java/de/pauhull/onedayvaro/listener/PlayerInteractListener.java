@@ -32,7 +32,7 @@ public class PlayerInteractListener implements Listener {
         Player player = event.getPlayer();
         ItemStack stack = event.getItem();
 
-        if (!this.oneDayVaro.isIngame()) {
+        if (!this.oneDayVaro.getIngamePhase().isCanBuild()) {
             event.setCancelled(true);
 
             if (oneDayVaro.getItemManager().getBackToLobby().equals(stack)

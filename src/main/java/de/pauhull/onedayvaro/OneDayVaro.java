@@ -1,16 +1,19 @@
 package de.pauhull.onedayvaro;
 
+import cloud.evaped.coinsapi.API.CoinsAPI;
 import de.pauhull.onedayvaro.command.*;
-import de.pauhull.onedayvaro.display.VaroScoreboard;
+import de.pauhull.onedayvaro.data.MySQL;
+import de.pauhull.onedayvaro.data.table.StatsTable;
+import de.pauhull.onedayvaro.display.LobbyScoreboard;
 import de.pauhull.onedayvaro.group.GroupManager;
 import de.pauhull.onedayvaro.inventory.OptionsInventory;
 import de.pauhull.onedayvaro.inventory.TeamInventory;
 import de.pauhull.onedayvaro.listener.*;
 import de.pauhull.onedayvaro.manager.ItemManager;
 import de.pauhull.onedayvaro.manager.LocationManager;
+import de.pauhull.onedayvaro.manager.SignManager;
 import de.pauhull.onedayvaro.manager.SpawnerManager;
 import de.pauhull.onedayvaro.phase.IngamePhase;
-import de.pauhull.onedayvaro.util.CoinApiHook;
 import de.pauhull.onedayvaro.util.Locale;
 import de.pauhull.onedayvaro.util.Options;
 import de.pauhull.onedayvaro.util.Permissions;
@@ -31,6 +34,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Paul
@@ -45,9 +50,6 @@ public class OneDayVaro extends JavaPlugin {
 
     @Getter
     private ScoreboardManager scoreboardManager;
-
-    @Getter
-    private CoinApiHook coinApiHook;
 
     @Getter
     private GroupManager groupManager;
@@ -87,26 +89,62 @@ public class OneDayVaro extends JavaPlugin {
     @Getter
     private TeamInventory teamInventory;
 
+    @Getter
+    private CoinsAPI coinsApi;
+
+    @Getter
+    private FileConfiguration mysqlConfig;
+
+    @Getter
+    private ExecutorService executorService;
+
+    @Getter
+    private MySQL mySQL;
+
+    @Getter
+    private StatsTable statsTable;
+
+    @Getter
+    private SignManager signManager;
+
     @Override
     public void onEnable() {
         instance = this;
 
         this.options = new Options();
         this.itemManager = new ItemManager();
-        this.scoreboardManager = new ScoreboardManager(this, VaroScoreboard.class);
+        this.scoreboardManager = new ScoreboardManager(this, LobbyScoreboard.class);
         this.groupManager = new GroupManager(this);
-        this.coinApiHook = new CoinApiHook();
+        this.coinsApi = new CoinsAPI();
         this.spawnerManager = new SpawnerManager(this);
         this.locationManager = new LocationManager(this);
         this.config = copyAndLoad("config.yml", new File(getDataFolder(), "config.yml"));
+        this.mysqlConfig = copyAndLoad("mysql.yml", new File(getDataFolder(), "mysql.yml"));
         this.pluginEnabled = config.getBoolean("Enabled");
         this.optionsInventory = new OptionsInventory(this);
         this.ingamePhase = new IngamePhase(this);
         this.teamInventory = new TeamInventory(this);
+        this.signManager = new SignManager(this);
+
+        this.mySQL = new MySQL(mysqlConfig.getString("MySQL.Host"),
+                mysqlConfig.getString("MySQL.Port"),
+                mysqlConfig.getString("MySQL.Database"),
+                mysqlConfig.getString("MySQL.User"),
+                mysqlConfig.getString("MySQL.Password"),
+                mysqlConfig.getBoolean("MySQL.SSL"));
+
+        if (!this.mySQL.connect()) {
+            Bukkit.getConsoleSender().sendMessage("§c[ODVPlugin] Konnte nicht zur MySQL-Datenbank verbinden. Plugin wird gestoppt...");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        this.executorService = Executors.newFixedThreadPool(10);
+        this.statsTable = new StatsTable(mySQL, executorService);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             scoreboardManager.updateTeam(player);
-            CustomScoreboard scoreboard = new VaroScoreboard(player);
+            CustomScoreboard scoreboard = new LobbyScoreboard(player);
             scoreboard.show();
             scoreboardManager.getScoreboards().put(player, scoreboard);
         }
@@ -125,8 +163,12 @@ public class OneDayVaro extends JavaPlugin {
             new PlayerDropItemListener(this);
             new PlayerInteractListener(this);
             new PlayerJoinListener(this);
+            new PlayerLoginListener(this);
             new PlayerPickupItemListener(this);
             new PlayerQuitListener(this);
+            new PlayerPortalListener(this);
+            new PlayerDeathListener(this);
+            new PlayerDamageByArrowListener(this);
 
             new ConfigCommand(this);
             new StartCommand(this);
@@ -134,12 +176,15 @@ public class OneDayVaro extends JavaPlugin {
             new GlobalMuteCommand(this);
         }
 
+        new SignChangeListener(this);
         new AddSpawnCommand(this);
         new RemoveSpawnCommand(this);
         new SetLocationCommand(this);
 
         Locale.load();
         Permissions.load();
+
+        signManager.setTopWall();
     }
 
     @Override
@@ -148,6 +193,10 @@ public class OneDayVaro extends JavaPlugin {
 
         for (CustomScoreboard scoreboard : scoreboardManager.getScoreboards().values()) {
             scoreboard.delete();
+        }
+
+        if (this.executorService != null && !this.executorService.isShutdown()) {
+            this.executorService.shutdown();
         }
     }
 

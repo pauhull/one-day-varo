@@ -12,12 +12,12 @@ import org.bukkit.scoreboard.Team;
  *
  * @author pauhull
  */
-public class VaroScoreboard extends CustomScoreboard {
+public class IngameScoreboard extends CustomScoreboard {
 
     private OneDayVaro oneDayVaro;
-    private DisplayScore coins;
+    private DisplayScore coins, kills;
 
-    public VaroScoreboard(Player player) {
+    public IngameScoreboard(Player player) {
         super(player, "varoscoreboard", "§6§lElite§f§lEmpire");
         this.descending = false;
         this.nextScoreID = 1;
@@ -33,18 +33,11 @@ public class VaroScoreboard extends CustomScoreboard {
         new DisplayScore("§8➥ §6Orbital-Hub.com");
         new DisplayScore("§8§l× §f§lWebsite");
         new DisplayScore();
-        coins = new DisplayScore("§8➥ §6" + oneDayVaro.getCoinApiHook().getCoins(player.getUniqueId()));
+        coins = new DisplayScore("§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString()));
         new DisplayScore("§8§l× §f§lDeine Coins");
         new DisplayScore();
-
-        Group group = oneDayVaro.getGroupManager().getGroup(player);
-        if (group != null) {
-            new DisplayScore("§8➥ " + group.getScoreboardName());
-        } else {
-            new DisplayScore("§8➥ §6Unbekannt");
-        }
-
-        new DisplayScore("§8§l× §f§lRang");
+        this.kills = new DisplayScore("§8➥ §60");
+        new DisplayScore("§8§l× §f§lKills");
         new DisplayScore();
 
         super.show();
@@ -52,9 +45,18 @@ public class VaroScoreboard extends CustomScoreboard {
 
     @Override
     public void update() {
-        String newCoins = "§8➥ §6" + oneDayVaro.getCoinApiHook().getCoins(player.getUniqueId());
+        String newCoins = "§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString());
         if (!newCoins.equals(coins.getScore().getEntry())) {
             coins.setName(newCoins);
+        }
+
+        int kills = 0;
+        if (oneDayVaro.getIngamePhase().getKills().containsKey(player.getName())) {
+            kills = oneDayVaro.getIngamePhase().getKills().get(player.getName());
+        }
+        String newKills = "§8➥ §6" + kills;
+        if (!newKills.equals(this.kills.getScore().getEntry())) {
+            this.kills.setName(newKills);
         }
     }
 
@@ -63,7 +65,18 @@ public class VaroScoreboard extends CustomScoreboard {
         Group group = oneDayVaro.getGroupManager().getGroup(player);
 
         if (group != null) {
-            String teamName = String.format("%02d", group.getId()) + player.getName();
+
+            de.pauhull.onedayvaro.team.Team odvTeam = de.pauhull.onedayvaro.team.Team.getTeam(player);
+            String name = "";
+
+            if (odvTeam != null) {
+                name = odvTeam.getName();
+                if (name.length() > 4) {
+                    name = name.substring(0, 4);
+                }
+            }
+
+            String teamName = String.format("%02d", group.getId()) + name + player.getName();
             if (teamName.length() > 16) {
                 teamName = teamName.substring(0, 16);
             }
@@ -77,6 +90,14 @@ public class VaroScoreboard extends CustomScoreboard {
             if (prefix.length() > 16) {
                 prefix = prefix.substring(0, 16);
             }
+
+            int kills = 0;
+            if (oneDayVaro.getIngamePhase().getKills().containsKey(player.getName())) {
+                kills = oneDayVaro.getIngamePhase().getKills().get(player.getName());
+            }
+            String suffix = " §8[§e" + kills + "§8]";
+
+            team.setSuffix(suffix);
             team.setPrefix(prefix);
             team.addEntry(player.getName());
         }
