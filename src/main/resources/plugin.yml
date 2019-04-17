@@ -2,7 +2,7 @@ name: ODVPlugin
 version: 1.0
 main: de.pauhull.onedayvaro.OneDayVaro
 author: pauhull
-softdepend: [CoinsAPI]
+depend: [CoinsAPI]
 
 load: POSTWORLD
 
@@ -14,3 +14,7 @@ commands:
   removespawn:
   globalmute:
   teams:
+  stats:
+  host:
+  helphost:
+  helpop:

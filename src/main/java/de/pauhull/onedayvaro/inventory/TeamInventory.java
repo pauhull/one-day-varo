@@ -4,9 +4,7 @@ import de.pauhull.onedayvaro.OneDayVaro;
 import de.pauhull.onedayvaro.team.Team;
 import de.pauhull.onedayvaro.util.ItemBuilder;
 import de.pauhull.onedayvaro.util.Locale;
-import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -25,7 +23,6 @@ import org.bukkit.inventory.ItemStack;
 public class TeamInventory implements Listener {
 
     private static final String TITLE = "§cTeam-Einstellungen";
-    private static final ItemStack RENAME = new ItemBuilder().material(Material.ANVIL).displayName("§dTeam umbenennen").build();
     private static final ItemStack DELETE_TEAM = new ItemBuilder().material(Material.BARRIER).displayName("§4Team löschen").build();
     private static final ItemStack LEAVE = new ItemBuilder().material(Material.WOOD_DOOR).displayName("§cTeam verlassen").build();
 
@@ -49,8 +46,7 @@ public class TeamInventory implements Listener {
         }
 
         if (team.getOwner() == player) {
-            inventory.setItem(1, RENAME);
-            inventory.setItem(7, DELETE_TEAM);
+            inventory.setItem(4, DELETE_TEAM);
         } else {
             inventory.setItem(4, LEAVE);
         }
@@ -76,26 +72,14 @@ public class TeamInventory implements Listener {
 
         if (stack != null && team != null) {
 
-            if (stack.equals(RENAME)) {
-
-                new AnvilGUI(oneDayVaro, player, team.getName(), (anvilPlayer, reply) -> {
-
-                    if (reply.length() > 16) {
-                        anvilPlayer.sendMessage(Locale.TeamNameTooLong);
-                        return reply;
-                    }
-
-                    String name = ChatColor.translateAlternateColorCodes('&', reply);
-                    team.setName(name);
-                    anvilPlayer.sendMessage(Locale.TeamRenamed.replace("%NAME%", name));
-                    return null;
-                });
-            } else if (stack.equals(DELETE_TEAM)) {
+            if (stack.equals(DELETE_TEAM)) {
 
                 if (player == team.getOwner()) {
                     team.broadcast(Locale.TeamDeleted);
                     team.delete();
                 }
+
+                player.getInventory().setItem(1, null);
 
                 player.closeInventory();
             } else if (stack.equals(LEAVE)) {

@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -81,6 +83,8 @@ public class DoubleOres extends Scenario implements Listener {
             for (ItemStack drop : drops) {
                 for (int i = 0; i < 2; i++) {
                     location.getWorld().dropItemNaturally(location, drop);
+                    ExperienceOrb exp = (ExperienceOrb) location.getWorld().spawnEntity(location, EntityType.EXPERIENCE_ORB);
+                    exp.setExperience(2);
                 }
             }
         }, 0);

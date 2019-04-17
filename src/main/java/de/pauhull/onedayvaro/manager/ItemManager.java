@@ -16,6 +16,9 @@ import org.bukkit.inventory.ItemStack;
 public class ItemManager {
 
     @Getter
+    private ItemStack rename;
+
+    @Getter
     private ItemStack backToLobby;
 
     @Getter
@@ -23,13 +26,10 @@ public class ItemManager {
 
     public ItemManager() {
         this.backToLobby = new ItemBuilder().material(Material.SLIME_BALL).displayName("§cZurück zur Lobby").build();
-        this.inviteToTeam = new ItemBuilder()
-                .material(Material.IRON_SWORD)
-                .displayName("§bZu Team einladen")
-                .flag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
-                .lore("§8» §7Linksklick: Spieler einladen", "§8» §7Rechtsklick: Team-Optionen")
-                .unbreakable()
-                .build();
+        this.rename = new ItemBuilder().material(Material.ANVIL).displayName("§dTeam umbenennen").build();
+        this.inviteToTeam = new ItemBuilder().material(Material.IRON_SWORD).displayName("§bZu Team einladen")
+                .flag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE).lore("§8» §7Linksklick: Spieler einladen",
+                        "§8» §7Rechtsklick: Team-Optionen").unbreakable().build();
     }
 
     public void giveLobbyItems(Player player) {

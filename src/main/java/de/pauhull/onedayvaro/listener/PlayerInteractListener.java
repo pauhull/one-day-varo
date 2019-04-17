@@ -1,8 +1,11 @@
 package de.pauhull.onedayvaro.listener;
 
 import de.pauhull.onedayvaro.OneDayVaro;
+import de.pauhull.onedayvaro.team.Team;
 import de.pauhull.onedayvaro.util.Locale;
+import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,13 +38,15 @@ public class PlayerInteractListener implements Listener {
         if (!this.oneDayVaro.getIngamePhase().isCanBuild()) {
             event.setCancelled(true);
 
-            if (oneDayVaro.getItemManager().getBackToLobby().equals(stack)
-                    && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+            if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) {
+                return;
+            }
+
+            if (oneDayVaro.getItemManager().getBackToLobby().equals(stack)) {
 
                 player.kickPlayer("");
 
-            } else if (oneDayVaro.getItemManager().getInviteToTeam().equals(stack)
-                    && (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+            } else if (oneDayVaro.getItemManager().getInviteToTeam().equals(stack)) {
 
                 if (oneDayVaro.getOptions().getTeamSize() <= 1) {
                     player.sendMessage(Locale.OnlyFFA);
@@ -49,6 +54,26 @@ public class PlayerInteractListener implements Listener {
                 }
 
                 oneDayVaro.getTeamInventory().show(player);
+            } else if (oneDayVaro.getItemManager().getRename().equals(stack)) {
+
+                Team team = Team.getTeam(player);
+
+                if (team == null) {
+                    return;
+                }
+
+                new AnvilGUI(oneDayVaro, player, team.getName(), (anvilPlayer, reply) -> {
+
+                    if (reply.length() > 16) {
+                        anvilPlayer.sendMessage(Locale.TeamNameTooLong);
+                        return reply;
+                    }
+
+                    String name = ChatColor.translateAlternateColorCodes('&', reply);
+                    team.setName(name);
+                    anvilPlayer.sendMessage(Locale.TeamRenamed.replace("%NAME%", name));
+                    return null;
+                });
             }
         }
     }

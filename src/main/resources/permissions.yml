@@ -3,7 +3,11 @@ Options: odv.command.options
 Start: odv.command.start
 AddSpawn: odv.command.addspawn
 Globalmute: odv.command.globalmute
-GlobalmuteBypass: odv.globalmute.bypass
+GlobalmuteBypass: odv.command.globalmute.bypass
 Teams: odv.command.teams
 FullJoin: odv.team.fulljoin
 CreateSign: odv.sign.create
+SetHost: odv.command.host
+HelpHost: odv.command.helphost
+HelpOp: ovd.command.helpop
+HelpOpReceive: odv.command.helpop.receive

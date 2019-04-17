@@ -27,7 +27,7 @@ public class StartCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.hasPermission(Permissions.Start)) {
+        if (!sender.hasPermission(Permissions.Start) && !sender.getName().equalsIgnoreCase(oneDayVaro.getHost())) {
             sender.sendMessage(Locale.NoPermission);
             return true;
         }

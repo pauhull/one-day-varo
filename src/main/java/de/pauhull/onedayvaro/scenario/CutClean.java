@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -65,7 +67,11 @@ public class CutClean extends Scenario implements Listener {
 
             ItemStack drop = new ItemStack(block.getType() == Material.IRON_ORE ? Material.IRON_INGOT : Material.GOLD_INGOT);
             Location location = block.getLocation().add(0.5, 0, 0.5);
-            Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> location.getWorld().dropItemNaturally(location, drop), 0);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> {
+                location.getWorld().dropItemNaturally(location, drop);
+                ExperienceOrb exp = (ExperienceOrb) location.getWorld().spawnEntity(location, EntityType.EXPERIENCE_ORB);
+                exp.setExperience(1);
+            }, 0);
 
             event.setCancelled(true);
             block.setType(Material.AIR);

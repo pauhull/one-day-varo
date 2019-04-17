@@ -49,6 +49,10 @@ public class OneDayVaro extends JavaPlugin {
     private static OneDayVaro instance;
 
     @Getter
+    @Setter
+    private String host = "";
+
+    @Getter
     private ScoreboardManager scoreboardManager;
 
     @Getter
@@ -169,11 +173,16 @@ public class OneDayVaro extends JavaPlugin {
             new PlayerPortalListener(this);
             new PlayerDeathListener(this);
             new PlayerDamageByArrowListener(this);
+            new PlayerCommandPreprocessListener(this);
 
             new ConfigCommand(this);
             new StartCommand(this);
             new TeamsCommand(this);
             new GlobalMuteCommand(this);
+            new StatsCommand(this);
+            new HelpOpCommand(this);
+            new HostCommand(this);
+            new HelpHostCommand(this);
         }
 
         new SignChangeListener(this);

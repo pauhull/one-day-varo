@@ -1,4 +1,8 @@
 Groups:
+  Host:
+    Chat: "&9&lHost &7● &9%PLAYER% &7» &f%MESSAGE%"
+    TablistPrefix: "&9&lHost &7● &9"
+    ScoreboardName: "&9&lHost"
   Owner:
     Chat: "&4&lOwner &7● &4%PLAYER% &7» &f%MESSAGE%"
     TablistPrefix: "&4&lOwner &7● &4"

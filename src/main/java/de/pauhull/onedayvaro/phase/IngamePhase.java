@@ -3,6 +3,7 @@ package de.pauhull.onedayvaro.phase;
 import de.pauhull.onedayvaro.OneDayVaro;
 import de.pauhull.onedayvaro.display.IngameScoreboard;
 import de.pauhull.onedayvaro.team.Team;
+import de.pauhull.onedayvaro.util.ActionBar;
 import de.pauhull.onedayvaro.util.ChatFace;
 import de.pauhull.onedayvaro.util.Locale;
 import de.pauhull.onedayvaro.util.Options.ProtectionPeriod;
@@ -130,8 +131,11 @@ public class IngamePhase implements Listener {
 
             int i = countdown.getAndDecrement();
 
+            String s = ("" + Locale.getOrDefault("GameStartsIn." + i, "GameStartsIn.Default"))
+                    .replace("%TIME%", Integer.toString(i));
+
             if (i == 60 || i == 30 || i == 10) {
-                Bukkit.broadcastMessage(Locale.GameStartsIn.replace("%TIME%", Integer.toString(i)));
+                Bukkit.broadcastMessage(s);
             }
 
             if (i > 0) {
@@ -141,7 +145,7 @@ public class IngamePhase implements Listener {
                     player.setLevel(i);
 
                     if (i <= 10) {
-                        Title.playTitle(player, " ", Locale.GameStartsIn.replace("%TIME%", Integer.toString(i)).replace(Locale.Prefix, ""), 0, 20, 10);
+                        Title.playTitle(player, " ", s.replace(Locale.Prefix, ""), 0, 20, 10);
                         player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1, 1);
                     }
                 }
@@ -177,15 +181,36 @@ public class IngamePhase implements Listener {
             Bukkit.broadcastMessage(Locale.GracePeriodEndsIn.replace("%PERIOD%", protectionPeriod.getName()));
         }
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> {
+        AtomicInteger seconds = new AtomicInteger(protectionPeriod.getSeconds());
+        AtomicInteger task = new AtomicInteger();
+        task.set(Bukkit.getScheduler().scheduleSyncRepeatingTask(oneDayVaro, () -> {
 
-            gracePeriod = false;
-            Bukkit.broadcastMessage(Locale.GracePeriodEnd);
+            int i = seconds.getAndDecrement();
 
-        }, 20 * protectionPeriod.getSeconds());
+            if (i > 0) {
+
+                ActionBar actionBar = new ActionBar(("" + Locale.getOrDefault("ProtectionPeriod." + i,
+                        "ProtectionPeriod.Default"))
+                        .replace("%TIME%", Integer.toString(i))
+                        .replace(Locale.Prefix, ""));
+
+                actionBar.send(Bukkit.getOnlinePlayers().toArray(new Player[0]));
+            }
+
+            if (i <= 0) {
+                gracePeriod = false;
+                Bukkit.broadcastMessage(Locale.GracePeriodEnd);
+                Bukkit.getScheduler().cancelTask(task.get());
+            }
+
+        }, 0, 20));
     }
 
     public void checkForWin() {
+
+        if (!oneDayVaro.isIngame()) {
+            return;
+        }
 
         Player winner = null;
         int differentTeams = 0;
@@ -268,13 +293,14 @@ public class IngamePhase implements Listener {
 
         AtomicInteger task = new AtomicInteger();
         AtomicInteger countdown = new AtomicInteger(30);
-        Bukkit.broadcastMessage(Locale.ServerRestartsIn.replace("%TIME%", Integer.toString(countdown.get())));
         task.set(Bukkit.getScheduler().scheduleSyncRepeatingTask(oneDayVaro, () -> {
 
             int i = countdown.getAndDecrement();
 
-            if (i <= 10 && i > 0) {
-                Bukkit.broadcastMessage(Locale.ServerRestartsIn.replace("%TIME%", Integer.toString(i)));
+            if ((i <= 10 && i > 0) || i == 30) {
+
+                Bukkit.broadcastMessage(("" + Locale.getOrDefault("ServerRestartsIn." + i, "ServerRestartsIn.Default"))
+                        .replace("%TIME%", Integer.toString(i)));
             }
 
             if (i == 0) {

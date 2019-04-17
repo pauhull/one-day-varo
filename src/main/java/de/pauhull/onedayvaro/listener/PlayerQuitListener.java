@@ -39,6 +39,14 @@ public class PlayerQuitListener implements Listener {
 
         if (oneDayVaro.isIngame()) {
             event.setQuitMessage(null);
+
+            Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> oneDayVaro.getIngamePhase().checkForWin(), 0);
+
+            if (!oneDayVaro.getIngamePhase().getSpectators().contains(player)) {
+                oneDayVaro.getCoinsApi().removeCoins(player.getUniqueId().toString(), 25);
+                player.sendMessage(Locale.CoinsRemoved.replace("%COINS%", "25"));
+            }
+
         } else {
             event.setQuitMessage(Locale.LobbyLeave.replace("%PLAYER%", player.getName()));
         }
@@ -58,10 +66,6 @@ public class PlayerQuitListener implements Listener {
                 team.getMembers().remove(player);
             }
         }
-
-        Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> {
-            oneDayVaro.getIngamePhase().checkForWin();
-        }, 0);
     }
 
 }

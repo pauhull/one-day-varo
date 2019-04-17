@@ -21,9 +21,12 @@ public class GroupManager {
     @Getter
     private List<Group> groups;
 
+    private OneDayVaro oneDayVaro;
+
     public GroupManager(OneDayVaro oneDayVaro) {
 
-        loadGroupsFromConfig(oneDayVaro.copyAndLoad("groups.yml", new File(oneDayVaro.getDataFolder(), "groups.yml")));
+        this.oneDayVaro = oneDayVaro;
+        this.loadGroupsFromConfig(oneDayVaro.copyAndLoad("groups.yml", new File(oneDayVaro.getDataFolder(), "groups.yml")));
     }
 
     private void loadGroupsFromConfig(FileConfiguration config) {
@@ -39,6 +42,7 @@ public class GroupManager {
 
             Group group = Group.builder()
                     .id(id++)
+                    .name(groupName)
                     .chatFormat(chatFormat)
                     .tablistPrefix(tablistPrefix)
                     .scoreboardName(scoreboardName)
@@ -52,6 +56,16 @@ public class GroupManager {
     public Group getGroup(Player player) {
 
         for (Group group : groups) {
+
+            if (group.getName().equalsIgnoreCase("Host")) {
+
+                if (player.getName().equalsIgnoreCase(oneDayVaro.getHost())) {
+                    return group;
+                }
+
+                continue;
+            }
+
             if (group.getPermission() == null) {
 
                 return group;

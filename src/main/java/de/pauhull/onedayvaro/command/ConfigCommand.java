@@ -27,7 +27,7 @@ public class ConfigCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!sender.hasPermission(Permissions.Options)) {
+        if (!sender.hasPermission(Permissions.Options) && !sender.getName().equalsIgnoreCase(oneDayVaro.getHost())) {
             sender.sendMessage(Locale.NoPermission);
             return true;
         }

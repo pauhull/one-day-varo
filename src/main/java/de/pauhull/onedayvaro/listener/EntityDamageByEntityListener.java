@@ -76,6 +76,7 @@ public class EntityDamageByEntityListener implements Listener {
                 if (damagerTeam == null) {
                     damagerTeam = Team.create(damager);
                     damager.sendMessage(Locale.TeamCreated);
+                    damager.getInventory().setItem(1, oneDayVaro.getItemManager().getRename());
                 }
 
                 if (damager != damagerTeam.getOwner()) {

@@ -59,6 +59,9 @@ public class PlayerDeathListener implements Listener {
         }
         player.kickPlayer(stringBuilder.toString());
 
+        oneDayVaro.getCoinsApi().removeCoins(player.getUniqueId().toString(), 25);
+        player.sendMessage(Locale.CoinsRemoved.replace("%COINS%", "25"));
+
         if (killer != null) {
             oneDayVaro.getCoinsApi().addCoins(killer.getUniqueId().toString(), 100);
             killer.sendMessage(Locale.CoinsAdded.replace("%COINS%", "100"));

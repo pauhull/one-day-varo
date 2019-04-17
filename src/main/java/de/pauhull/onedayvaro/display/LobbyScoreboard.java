@@ -15,7 +15,7 @@ import org.bukkit.scoreboard.Team;
 public class LobbyScoreboard extends CustomScoreboard {
 
     private OneDayVaro oneDayVaro;
-    private DisplayScore coins;
+    private DisplayScore coins, rank;
 
     public LobbyScoreboard(Player player) {
         super(player, "varoscoreboard", "§6§lElite§f§lEmpire");
@@ -39,9 +39,9 @@ public class LobbyScoreboard extends CustomScoreboard {
 
         Group group = oneDayVaro.getGroupManager().getGroup(player);
         if (group != null) {
-            new DisplayScore("§8➥ " + group.getScoreboardName());
+            rank = new DisplayScore("§8➥ " + group.getScoreboardName());
         } else {
-            new DisplayScore("§8➥ §6Unbekannt");
+            rank = new DisplayScore("§8➥ §6Unbekannt");
         }
 
         new DisplayScore("§8§l× §f§lRang");
@@ -55,6 +55,17 @@ public class LobbyScoreboard extends CustomScoreboard {
         String newCoins = "§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString());
         if (!newCoins.equals(coins.getScore().getEntry())) {
             coins.setName(newCoins);
+        }
+
+        Group group = oneDayVaro.getGroupManager().getGroup(player);
+        String newRank;
+        if (group != null) {
+            newRank = "§8➥ " + group.getScoreboardName();
+        } else {
+            newRank = "§8➥ §6Unbekannt";
+        }
+        if (!rank.getScore().getEntry().equals(newRank)) {
+            rank.setName(newRank);
         }
     }
 

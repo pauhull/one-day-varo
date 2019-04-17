@@ -23,6 +23,10 @@ public class Permissions {
     public static String Teams = "";
     public static String FullJoin = "";
     public static String CreateSign = "";
+    public static String SetHost = "";
+    public static String HelpHost = "";
+    public static String HelpOp = "";
+    public static String HelpOpReceive = "";
 
     public static void load() {
 

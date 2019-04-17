@@ -6,6 +6,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Paul
@@ -14,6 +16,8 @@ import java.lang.reflect.Field;
  * @author pauhull
  */
 public class Locale {
+
+    public static String HostSet = "";
 
     public static String Prefix = "";
     public static String LobbyJoin = "";
@@ -50,7 +54,6 @@ public class Locale {
     public static String WorldChanged = "";
     public static String NoSpawnFound = "";
     public static String NotAnySpawns = "";
-    public static String GameStartsIn = "";
     public static String GameStarted = "";
     public static String GracePeriodEnd = "";
     public static String NetherEnabled = "";
@@ -67,8 +70,13 @@ public class Locale {
     public static String SignPlaced = "";
     public static String SignDestroyed = "";
     public static String InvalidNumber = "";
-    public static String ServerRestartsIn = "";
     public static String TeamFull = "";
+    public static String HelpOp = "";
+    public static String HelpHost = "";
+    public static String CoinsRemoved = "";
+    public static List<String> ServerInfo = new ArrayList<>();
+    public static List<String> Stats = new ArrayList<>();
+    private static FileConfiguration config;
 
     public static void load() {
 
@@ -77,16 +85,49 @@ public class Locale {
 
     public static void load(FileConfiguration config) {
 
+        Locale.config = config;
+
         for (Field field : Locale.class.getDeclaredFields()) {
-            if (config.isString(field.getName())) {
+            if (config.isString(field.getName()) && field.getType().isAssignableFrom(String.class)) {
                 try {
-                    field.set(null, Prefix + ChatColor.translateAlternateColorCodes('&', config.getString(field.getName())));
+                    StringBuilder builder = new StringBuilder();
+
+                    if (!field.getName().equals("Prefix")) {
+                        builder.append(Prefix);
+                    }
+
+                    builder.append(config.getString(field.getName()));
+
+                    field.set(null, ChatColor.translateAlternateColorCodes('&', builder.toString()));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            } else if (config.isList(field.getName()) && field.getType().isAssignableFrom(List.class)) {
+                try {
+
+                    List<String> list = new ArrayList<>();
+                    for (String s : config.getStringList(field.getName())) {
+                        list.add(ChatColor.translateAlternateColorCodes('&', s));
+                    }
+
+                    field.set(null, list);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             } else {
-                System.err.println("[ODVPlugin] Missing field in messages.yml: \"" + field.getName() + "\"");
+                System.err.println("[ODVPlugin] Missing or wrong type field in messages.yml: \"" + field.getName() + "\"");
             }
+        }
+    }
+
+    public static String getOrDefault(String path, String standard) {
+
+        if (config != null && config.isString(path)) {
+            return Prefix + ChatColor.translateAlternateColorCodes('&', config.getString(path));
+        } else if (config != null && config.isString(standard)) {
+            return Prefix + ChatColor.translateAlternateColorCodes('&', config.getString(standard));
+        } else {
+            return null;
         }
     }
 
