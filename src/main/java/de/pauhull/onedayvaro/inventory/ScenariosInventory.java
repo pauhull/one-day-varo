@@ -26,9 +26,9 @@ import java.util.List;
  */
 public class ScenariosInventory implements Listener {
 
-    private static final ItemStack ENABLED = new ItemBuilder().material(Material.INK_SACK).data(10).displayName("§aAktiviert").build();
-    private static final ItemStack DISABLED = new ItemBuilder().material(Material.INK_SACK).data(8).displayName("§7Deaktiviert").build();
-    private static final String TITLE = "§cSzenarios";
+    private static final ItemStack ENABLED = new ItemBuilder().material(Material.INK_SACK).data(10).displayName("§aEnabled").build();
+    private static final ItemStack DISABLED = new ItemBuilder().material(Material.INK_SACK).data(8).displayName("§7Disabled").build();
+    private static final String TITLE = "§cScenarios";
 
     private Bowless bowless;
     private CutClean cutClean;
@@ -97,7 +97,7 @@ public class ScenariosInventory implements Listener {
 
         List<String> lore = new ArrayList<>(scenario.getLore());
         lore.add(" ");
-        lore.add(scenario.isEnabled() ? "§aAktiviert" : "§cDeaktiviert");
+        lore.add(scenario.isEnabled() ? "§aEnabled" : "§cDisabled");
         ItemStack stack = new ItemBuilder()
                 .material(scenario.getMaterial())
                 .displayName(scenario.getDisplayName())

@@ -25,8 +25,8 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TeamSizeInventory implements Listener {
 
-    private static final String TITLE = "§cTeamgröße auswählen";
-    private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.PAPER).displayName("§eTeamgröße: ").lore(" ", " §5§lKlicken zum Auswählen", " ").build();
+    private static final String TITLE = "§cChange team size";
+    private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.PAPER).displayName("§eTeam size: ").lore(" ", " §5§lClick to select", " ").build();
 
     private OneDayVaro oneDayVaro;
 
@@ -44,10 +44,10 @@ public class TeamSizeInventory implements Listener {
             ItemBuilder builder = new ItemBuilder(TEAM_SIZE);
 
             if (i + 1 == oneDayVaro.getOptions().getTeamSize()) {
-                builder.material(Material.EMPTY_MAP).lore(" ", " §a§lAusgewählt", " ").enchant(Enchantment.DURABILITY, 10, true).flag(ItemFlag.HIDE_ENCHANTS);
+                builder.material(Material.EMPTY_MAP).lore(" ", " §a§lSelected", " ").enchant(Enchantment.DURABILITY, 10, true).flag(ItemFlag.HIDE_ENCHANTS);
             }
 
-            builder.displayName("§eTeamgröße:§f " + (i + 1)).amount(i + 1);
+            builder.displayName("§eTeam size:§f " + (i + 1)).amount(i + 1);
             inventory.setItem(11 + i, builder.build());
         }
 

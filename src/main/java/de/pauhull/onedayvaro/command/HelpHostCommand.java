@@ -31,7 +31,7 @@ public class HelpHostCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(Locale.Prefix + "§c/helphost <Nachricht...>");
+            sender.sendMessage(Locale.Prefix + "§c/helphost <Message...>");
             return true;
         }
 

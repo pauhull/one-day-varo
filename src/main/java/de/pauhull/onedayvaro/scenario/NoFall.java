@@ -35,7 +35,7 @@ public class NoFall extends Scenario implements Listener {
     public NoFall(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Kein Fallschaden");
+        this.lore = Collections.singletonList("§7No fall damage");
         this.material = Material.FEATHER;
         this.displayName = "§6NoFall";
         this.durability = 0;

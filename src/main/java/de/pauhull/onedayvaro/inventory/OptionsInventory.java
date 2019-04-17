@@ -21,13 +21,13 @@ import org.bukkit.inventory.ItemStack;
  */
 public class OptionsInventory implements Listener {
 
-    private static final String TITLE = "§cOptionen";
-    private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.IRON_CHESTPLATE).displayName("§bTeamgröße ändern").build();
-    private static final ItemStack SCENARIOS = new ItemBuilder().material(Material.MAGMA_CREAM).displayName("§9Szenarios").build();
-    private static final ItemStack START = new ItemBuilder().material(Material.EMERALD).displayName("§aSpiel starten").build();
+    private static final String TITLE = "§cConfig";
+    private static final ItemStack TEAM_SIZE = new ItemBuilder().material(Material.IRON_CHESTPLATE).displayName("§bChange team size").build();
+    private static final ItemStack SCENARIOS = new ItemBuilder().material(Material.MAGMA_CREAM).displayName("§9Scenarios").build();
+    private static final ItemStack START = new ItemBuilder().material(Material.EMERALD).displayName("§aStart game").build();
     private static final ItemStack NETHER = new ItemBuilder().material(Material.NETHERRACK).displayName("§cNether").build();
-    private static final ItemStack PROTECTION_PERIOD = new ItemBuilder().material(Material.WATCH).displayName("§dSchutzzeit").build();
-    private static final ItemStack WORLD = new ItemBuilder().material(Material.GRASS).displayName("§aWelt auswählen").build();
+    private static final ItemStack PROTECTION_PERIOD = new ItemBuilder().material(Material.WATCH).displayName("§dProtection Period").build();
+    private static final ItemStack WORLD = new ItemBuilder().material(Material.GRASS).displayName("§aSelect world").build();
     private static final ItemStack BORDER = new ItemBuilder().material(Material.BARRIER).displayName("§9Border").build();
 
     private TeamSizeInventory teamSizeInventory;
@@ -54,9 +54,9 @@ public class OptionsInventory implements Listener {
 
         ItemBuilder builder = new ItemBuilder(NETHER);
         if (oneDayVaro.getOptions().isNether()) {
-            builder.lore(" ", " §a§lAktiviert", " ");
+            builder.lore(" ", " §a§lEnabled", " ");
         } else {
-            builder.lore(" ", " §c§lDeaktiviert", " ");
+            builder.lore(" ", " §c§lDisabled", " ");
         }
 
         if (!oneDayVaro.isIngame()) {
@@ -110,10 +110,10 @@ public class OptionsInventory implements Listener {
                 ItemBuilder builder = new ItemBuilder(inventory.getItem(9 + 6));
                 if (oneDayVaro.getOptions().isNether()) {
                     Bukkit.broadcastMessage(Locale.NetherEnabled);
-                    builder.lore(" ", " §a§lAktiviert", " ");
+                    builder.lore(" ", " §a§lEnabled", " ");
                 } else {
                     Bukkit.broadcastMessage(Locale.NetherDisabled);
-                    builder.lore(" ", " §c§lDeaktiviert", " ");
+                    builder.lore(" ", " §c§lDisabled", " ");
                 }
                 inventory.setItem(9 + 6, builder.build());
             }

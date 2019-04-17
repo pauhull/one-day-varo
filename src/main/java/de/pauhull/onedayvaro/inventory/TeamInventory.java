@@ -22,9 +22,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public class TeamInventory implements Listener {
 
-    private static final String TITLE = "§cTeam-Einstellungen";
-    private static final ItemStack DELETE_TEAM = new ItemBuilder().material(Material.BARRIER).displayName("§4Team löschen").build();
-    private static final ItemStack LEAVE = new ItemBuilder().material(Material.WOOD_DOOR).displayName("§cTeam verlassen").build();
+    private static final String TITLE = "§cTeam settings";
+    private static final ItemStack DELETE_TEAM = new ItemBuilder().material(Material.BARRIER).displayName("§4Delete team").build();
+    private static final ItemStack LEAVE = new ItemBuilder().material(Material.WOOD_DOOR).displayName("§cLeave team").build();
 
     private OneDayVaro oneDayVaro;
 

@@ -2,6 +2,7 @@ package de.pauhull.onedayvaro.listener;
 
 import de.pauhull.onedayvaro.OneDayVaro;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -26,6 +27,11 @@ public class EntityDamageListener implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
 
         if (!oneDayVaro.getIngamePhase().isCanBuild()) {
+            event.setCancelled(true);
+            event.setDamage(0);
+        }
+
+        if (event.getEntity() instanceof Player && oneDayVaro.getIngamePhase().isGracePeriod()) {
             event.setCancelled(true);
             event.setDamage(0);
         }

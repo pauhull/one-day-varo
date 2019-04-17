@@ -37,7 +37,7 @@ public class Rodless extends Scenario implements Listener {
     public Rodless(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Keine Rod benutzbar");
+        this.lore = Collections.singletonList("§7No rods usable");
         this.material = Material.FISHING_ROD;
         this.displayName = "§aRodless";
         this.durability = 0;

@@ -28,7 +28,7 @@ public class HostCommand implements CommandExecutor {
         }
 
         if (args.length < 1) {
-            sender.sendMessage(Locale.Prefix + "§c/sethost <Spieler>");
+            sender.sendMessage(Locale.Prefix + "§c/sethost <Player>");
             return true;
         }
 

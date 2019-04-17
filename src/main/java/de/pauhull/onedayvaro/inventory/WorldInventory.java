@@ -23,10 +23,10 @@ import java.util.List;
  */
 public class WorldInventory implements Listener {
 
-    private static final ItemStack RANDOM = new ItemBuilder().material(Material.FEATHER).displayName("§bZufällig").build();
-    private static final ItemStack NO_WORLDS = new ItemBuilder().material(Material.BARRIER).displayName("§4Keine Welten verfügbar").build();
+    private static final ItemStack RANDOM = new ItemBuilder().material(Material.FEATHER).displayName("§bRandom").build();
+    private static final ItemStack NO_WORLDS = new ItemBuilder().material(Material.BARRIER).displayName("§4No worlds available").build();
 
-    private static final String TITLE = "§cWelten";
+    private static final String TITLE = "§cWorlds";
 
     private OneDayVaro oneDayVaro;
 
@@ -57,12 +57,12 @@ public class WorldInventory implements Listener {
             ItemBuilder randomBuilder = new ItemBuilder(RANDOM);
             if (oneDayVaro.getOptions().getWorld() == null) {
 
-                randomBuilder.lore(" ", " §a§lAusgewählt", " ")
+                randomBuilder.lore(" ", " §a§lSelected", " ")
                         .enchant(Enchantment.DURABILITY, 10, true)
                         .flag(ItemFlag.HIDE_ENCHANTS);
             } else {
 
-                randomBuilder.lore(" ", "§5§l Klicken zum Auswählen", " ");
+                randomBuilder.lore(" ", "§5§l Click to select", " ");
             }
             inventory.setItem(0, randomBuilder.build());
 
@@ -77,14 +77,14 @@ public class WorldInventory implements Listener {
                     worldBuilder.material(Material.EMPTY_MAP)
                             .enchant(Enchantment.DURABILITY, 10, true)
                             .flag(ItemFlag.HIDE_ENCHANTS)
-                            .lore(" ", " §a§lAusgewählt", " ");
+                            .lore(" ", " §a§lSelected", " ");
                 } else {
 
                     worldBuilder.material(Material.PAPER)
-                            .lore(" ", " §5§lKlicken zum Auswählen", " ");
+                            .lore(" ", " §5§lClick to select", " ");
                 }
 
-                worldBuilder.displayName("§eWelt: §f" + world.getName());
+                worldBuilder.displayName("§eWorld: §f" + world.getName());
                 inventory.setItem(slot++, worldBuilder.build());
             }
         }
@@ -117,10 +117,10 @@ public class WorldInventory implements Listener {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
                 player.sendMessage(Locale.OptionChanged);
                 oneDayVaro.getOptionsInventory().show(player);
-                Bukkit.broadcastMessage(Locale.WorldChanged.replace("%WORLD%", "Zufällig"));
+                Bukkit.broadcastMessage(Locale.WorldChanged.replace("%WORLD%", "Random"));
             } else {
 
-                World world = Bukkit.getWorld(ChatColor.stripColor(stack.getItemMeta().getDisplayName()).replace("Welt: ", ""));
+                World world = Bukkit.getWorld(ChatColor.stripColor(stack.getItemMeta().getDisplayName()).replace("World: ", ""));
                 oneDayVaro.getOptions().setWorld(world);
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
                 player.sendMessage(Locale.OptionChanged);

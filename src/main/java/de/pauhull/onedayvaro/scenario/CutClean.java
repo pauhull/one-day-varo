@@ -40,7 +40,7 @@ public class CutClean extends Scenario implements Listener {
     public CutClean(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Alle Erze droppen geschmolzen");
+        this.lore = Collections.singletonList("§7Ores drop molten");
         this.material = Material.IRON_ORE;
         this.displayName = "§cCutClean";
         this.durability = 0;

@@ -43,12 +43,12 @@ public class BorderInventory implements Listener {
                 builder.material(Material.EMPTY_MAP)
                         .enchant(Enchantment.DURABILITY, 10, true)
                         .flag(ItemFlag.HIDE_ENCHANTS)
-                        .lore(" ", " §a§lAusgewählt", " ");
+                        .lore(" ", " §a§lSelected", " ");
             } else {
                 builder.material(Material.PAPER)
-                        .lore(" ", " §5§lKlicken zum Auswählen", " ");
+                        .lore(" ", " §5§lClick to select", " ");
             }
-            builder.displayName("§eBorder: §f" + border + " Blöcke");
+            builder.displayName("§eBorder: §f" + border + " Blocks");
             inventory.setItem(11 + i, builder.build());
         }
 
@@ -73,7 +73,7 @@ public class BorderInventory implements Listener {
             if (stack.getType() == Material.PAPER) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
                 player.sendMessage(Locale.OptionChanged);
-                oneDayVaro.getOptions().setBorder(Integer.valueOf(ChatColor.stripColor(stack.getItemMeta().getDisplayName()).replace("Border: ", "").replace(" Blöcke", "")));
+                oneDayVaro.getOptions().setBorder(Integer.valueOf(ChatColor.stripColor(stack.getItemMeta().getDisplayName()).replace("Border: ", "").replace(" Blocks", "")));
                 oneDayVaro.getOptionsInventory().show(player);
                 Bukkit.broadcastMessage(Locale.BorderChanged.replace("%BORDER%", Integer.toString(oneDayVaro.getOptions().getBorder())));
             }

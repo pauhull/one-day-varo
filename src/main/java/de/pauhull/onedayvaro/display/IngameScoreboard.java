@@ -34,7 +34,7 @@ public class IngameScoreboard extends CustomScoreboard {
         new DisplayScore("§8§l× §f§lWebsite");
         new DisplayScore();
         coins = new DisplayScore("§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString()));
-        new DisplayScore("§8§l× §f§lDeine Coins");
+        new DisplayScore("§8§l× §f§lYour Coins");
         new DisplayScore();
         this.kills = new DisplayScore("§8➥ §60");
         new DisplayScore("§8§l× §f§lKills");

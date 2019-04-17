@@ -25,8 +25,8 @@ import org.bukkit.inventory.ItemStack;
  */
 public class ProtectionPeriodInventory implements Listener {
 
-    private static final String TITLE = "§cSchutzzeit auswählen";
-    private static final ItemStack PROTECTION_PERIOD = new ItemBuilder().material(Material.PAPER).displayName("§eSchutzzeit: ").lore(" ", " §5§lKlicken zum Auswählen", " ").build();
+    private static final String TITLE = "§cSelect protection period";
+    private static final ItemStack PROTECTION_PERIOD = new ItemBuilder().material(Material.PAPER).displayName("§eProtection period: ").lore(" ", " §5§lClick to select", " ").build();
 
     private OneDayVaro oneDayVaro;
 
@@ -47,10 +47,10 @@ public class ProtectionPeriodInventory implements Listener {
                 ItemBuilder builder = new ItemBuilder(PROTECTION_PERIOD);
 
                 if (protectionPeriod == oneDayVaro.getOptions().getProtectionPeriod()) {
-                    builder.material(Material.EMPTY_MAP).lore(" ", " §a§lAusgewählt", " ").enchant(Enchantment.DURABILITY, 10, true).flag(ItemFlag.HIDE_ENCHANTS);
+                    builder.material(Material.EMPTY_MAP).lore(" ", " §a§lSelected", " ").enchant(Enchantment.DURABILITY, 10, true).flag(ItemFlag.HIDE_ENCHANTS);
                 }
 
-                builder.displayName("§eSchutzzeit:§f " + protectionPeriod.getName());
+                builder.displayName("§eProtection period:§f " + protectionPeriod.getName());
                 inventory.setItem(11 + i, builder.build());
             }
         }

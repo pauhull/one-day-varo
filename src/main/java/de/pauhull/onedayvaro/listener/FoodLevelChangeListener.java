@@ -25,7 +25,7 @@ public class FoodLevelChangeListener implements Listener {
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
 
-        if (!oneDayVaro.getIngamePhase().isCanBuild()) {
+        if (!oneDayVaro.getIngamePhase().isCanBuild() || oneDayVaro.getIngamePhase().isGracePeriod()) {
             event.setCancelled(true);
             event.setFoodLevel(20);
         }

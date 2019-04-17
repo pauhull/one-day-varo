@@ -35,7 +35,7 @@ public class Fireless extends Scenario implements Listener {
     public Fireless(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Kein Feuerschaden");
+        this.lore = Collections.singletonList("§7No fire damage");
         this.material = Material.FLINT_AND_STEEL;
         this.displayName = "§4Fireless";
         this.durability = 0;

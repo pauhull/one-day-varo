@@ -31,7 +31,7 @@ public class HelpOpCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(Locale.Prefix + "§c/helpop <Nachricht...>");
+            sender.sendMessage(Locale.Prefix + "§c/helpop <Message...>");
             return true;
         }
 

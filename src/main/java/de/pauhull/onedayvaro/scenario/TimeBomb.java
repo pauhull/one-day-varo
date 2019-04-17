@@ -43,7 +43,7 @@ public class TimeBomb extends Scenario implements Listener {
     public TimeBomb(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Arrays.asList("§7Alle Items sind in einer Kiste,", "§7die nach einer Weile explodiert.");
+        this.lore = Arrays.asList("§7All items are in a chest, which", "§7explodes after a while");
         this.material = Material.CHEST;
         this.displayName = "§5TimeBomb";
         this.durability = 0;

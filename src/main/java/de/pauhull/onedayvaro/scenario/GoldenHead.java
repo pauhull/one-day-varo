@@ -46,7 +46,7 @@ public class GoldenHead extends Scenario implements Listener {
     public GoldenHead(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Es spawnt ein Kopf, wenn ein Spieler stirbt.");
+        this.lore = Collections.singletonList("§7A skull spawns, when a player dies");
         this.material = Material.SKULL_ITEM;
         this.displayName = "§6GoldenHead";
         this.durability = 3;

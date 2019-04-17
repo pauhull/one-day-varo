@@ -38,7 +38,7 @@ public class Soup extends Scenario implements Listener {
     public Soup(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Suppen heilen sofort");
+        this.lore = Collections.singletonList("§7Soups heal instantly");
         this.material = Material.MUSHROOM_SOUP;
         this.displayName = "§eSoup";
         this.durability = 0;

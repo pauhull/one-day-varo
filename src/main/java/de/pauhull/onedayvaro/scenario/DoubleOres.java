@@ -43,7 +43,7 @@ public class DoubleOres extends Scenario implements Listener {
     public DoubleOres(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Alle Erze droppen doppelt");
+        this.lore = Collections.singletonList("§7Double as many ores drop");
         this.material = Material.DIAMOND_PICKAXE;
         this.displayName = "§9DoubleOres";
         this.durability = 0;

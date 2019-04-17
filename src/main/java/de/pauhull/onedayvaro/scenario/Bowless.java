@@ -37,7 +37,7 @@ public class Bowless extends Scenario implements Listener {
     public Bowless(OneDayVaro oneDayVaro) {
 
         this.oneDayVaro = oneDayVaro;
-        this.lore = Collections.singletonList("§7Kein Bogen benutzbar");
+        this.lore = Collections.singletonList("§7No bows usable");
         this.material = Material.BOW;
         this.displayName = "§bBowless";
         this.durability = 0;

@@ -34,17 +34,17 @@ public class LobbyScoreboard extends CustomScoreboard {
         new DisplayScore("§8§l× §f§lWebsite");
         new DisplayScore();
         coins = new DisplayScore("§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString()));
-        new DisplayScore("§8§l× §f§lDeine Coins");
+        new DisplayScore("§8§l× §f§lYour Coins");
         new DisplayScore();
 
         Group group = oneDayVaro.getGroupManager().getGroup(player);
         if (group != null) {
             rank = new DisplayScore("§8➥ " + group.getScoreboardName());
         } else {
-            rank = new DisplayScore("§8➥ §6Unbekannt");
+            rank = new DisplayScore("§8➥ §6Unknown");
         }
 
-        new DisplayScore("§8§l× §f§lRang");
+        new DisplayScore("§8§l× §f§lRank");
         new DisplayScore();
 
         super.show();
@@ -62,7 +62,7 @@ public class LobbyScoreboard extends CustomScoreboard {
         if (group != null) {
             newRank = "§8➥ " + group.getScoreboardName();
         } else {
-            newRank = "§8➥ §6Unbekannt";
+            newRank = "§8➥ §6Unknown";
         }
         if (!rank.getScore().getEntry().equals(newRank)) {
             rank.setName(newRank);

@@ -25,11 +25,11 @@ public class ItemManager {
     private ItemStack inviteToTeam;
 
     public ItemManager() {
-        this.backToLobby = new ItemBuilder().material(Material.SLIME_BALL).displayName("§cZurück zur Lobby").build();
-        this.rename = new ItemBuilder().material(Material.ANVIL).displayName("§dTeam umbenennen").build();
-        this.inviteToTeam = new ItemBuilder().material(Material.IRON_SWORD).displayName("§bZu Team einladen")
-                .flag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE).lore("§8» §7Linksklick: Spieler einladen",
-                        "§8» §7Rechtsklick: Team-Optionen").unbreakable().build();
+        this.backToLobby = new ItemBuilder().material(Material.SLIME_BALL).displayName("§cBack to lobby").build();
+        this.rename = new ItemBuilder().material(Material.ANVIL).displayName("§dRename team").build();
+        this.inviteToTeam = new ItemBuilder().material(Material.IRON_SWORD).displayName("§bInvite to team")
+                .flag(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE).lore("§8» §7Left click: Invite player",
+                        "§8» §7Right click: Team settings").unbreakable().build();
     }
 
     public void giveLobbyItems(Player player) {
