@@ -26,33 +26,33 @@ public class LobbyScoreboard extends CustomScoreboard {
 
     @Override
     public void show() {
+        new DisplayScore("§7§m------------------");
+        new DisplayScore("§8§l➥ §6EliteEmpire.net");
+        new DisplayScore("§8§l× §f§lTeamspeak:");
         new DisplayScore();
-        new DisplayScore("§8➥ §6ts.EliteEmpire.net");
-        new DisplayScore("§8§l× §f§lTeamspeak");
+        new DisplayScore("§8§l➥ §6Coming Soon");
+        new DisplayScore("§8§l× §f§lWebsite:");
         new DisplayScore();
-        new DisplayScore("§8➥ §6Orbital-Hub.com");
-        new DisplayScore("§8§l× §f§lWebsite");
-        new DisplayScore();
-        coins = new DisplayScore("§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString()));
-        new DisplayScore("§8§l× §f§lYour Coins");
+        this.coins = new DisplayScore("§8§l➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString()));
+        new DisplayScore("§8§l× §f§lCoins:");
         new DisplayScore();
 
         Group group = oneDayVaro.getGroupManager().getGroup(player);
         if (group != null) {
-            rank = new DisplayScore("§8➥ " + group.getScoreboardName());
+            rank = new DisplayScore("§l§8➥ " + group.getScoreboardName());
         } else {
-            rank = new DisplayScore("§8➥ §6Unknown");
+            rank = new DisplayScore("§l§8➥ §6Unknown");
         }
 
-        new DisplayScore("§8§l× §f§lRank");
-        new DisplayScore();
+        new DisplayScore("§8§l× §f§lRank:");
+        new DisplayScore("§7§m------------------§l");
 
         super.show();
     }
 
     @Override
     public void update() {
-        String newCoins = "§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString());
+        String newCoins = "§l§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString());
         if (!newCoins.equals(coins.getScore().getEntry())) {
             coins.setName(newCoins);
         }
@@ -60,9 +60,9 @@ public class LobbyScoreboard extends CustomScoreboard {
         Group group = oneDayVaro.getGroupManager().getGroup(player);
         String newRank;
         if (group != null) {
-            newRank = "§8➥ " + group.getScoreboardName();
+            newRank = "§l§8➥ " + group.getScoreboardName();
         } else {
-            newRank = "§8➥ §6Unknown";
+            newRank = "§l§8➥ §6Unknown";
         }
         if (!rank.getScore().getEntry().equals(newRank)) {
             rank.setName(newRank);

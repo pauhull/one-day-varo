@@ -40,7 +40,7 @@ public class PlayerQuitListener implements Listener {
         if (oneDayVaro.isIngame()) {
             event.setQuitMessage(null);
 
-            Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> oneDayVaro.getIngamePhase().checkForWin(), 0);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(oneDayVaro, () -> oneDayVaro.getIngamePhase().checkForWin(), 1);
 
             if (!oneDayVaro.getIngamePhase().getSpectators().contains(player)) {
                 oneDayVaro.getCoinsApi().removeCoins(player.getUniqueId().toString(), 25);

@@ -26,26 +26,26 @@ public class IngameScoreboard extends CustomScoreboard {
 
     @Override
     public void show() {
+        new DisplayScore("§7§m------------------");
+        new DisplayScore("§8§l➥ §6EliteEmpire.net");
+        new DisplayScore("§8§l× §f§lTeamspeak:");
         new DisplayScore();
-        new DisplayScore("§8➥ §6ts.EliteEmpire.net");
-        new DisplayScore("§8§l× §f§lTeamspeak");
+        new DisplayScore("§8§l➥ §6Coming Soon");
+        new DisplayScore("§8§l× §f§lWebsite:");
         new DisplayScore();
-        new DisplayScore("§8➥ §6Orbital-Hub.com");
-        new DisplayScore("§8§l× §f§lWebsite");
+        this.coins = new DisplayScore("§8§l➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString()));
+        new DisplayScore("§8§l× §f§lCoins:");
         new DisplayScore();
-        coins = new DisplayScore("§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString()));
-        new DisplayScore("§8§l× §f§lYour Coins");
-        new DisplayScore();
-        this.kills = new DisplayScore("§8➥ §60");
-        new DisplayScore("§8§l× §f§lKills");
-        new DisplayScore();
+        this.kills = new DisplayScore("§8§l➥ §60");
+        new DisplayScore("§8§l× §f§lKills:");
+        new DisplayScore("§7§m------------------§l");
 
         super.show();
     }
 
     @Override
     public void update() {
-        String newCoins = "§8➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString());
+        String newCoins = "§8§l➥ §6" + oneDayVaro.getCoinsApi().getCoins(player.getUniqueId().toString());
         if (!newCoins.equals(coins.getScore().getEntry())) {
             coins.setName(newCoins);
         }
@@ -54,7 +54,7 @@ public class IngameScoreboard extends CustomScoreboard {
         if (oneDayVaro.getIngamePhase().getKills().containsKey(player.getName())) {
             kills = oneDayVaro.getIngamePhase().getKills().get(player.getName());
         }
-        String newKills = "§8➥ §6" + kills;
+        String newKills = "§8§l➥ §6" + kills;
         if (!newKills.equals(this.kills.getScore().getEntry())) {
             this.kills.setName(newKills);
         }

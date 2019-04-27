@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +77,7 @@ public class Locale {
     public static String CoinsRemoved = "";
     public static List<String> ServerInfo = new ArrayList<>();
     public static List<String> Stats = new ArrayList<>();
+
     private static FileConfiguration config;
 
     public static void load() {
@@ -88,6 +90,11 @@ public class Locale {
         Locale.config = config;
 
         for (Field field : Locale.class.getDeclaredFields()) {
+
+            if (Modifier.isPrivate(field.getModifiers())) {
+                continue;
+            }
+
             if (config.isString(field.getName()) && field.getType().isAssignableFrom(String.class)) {
                 try {
                     StringBuilder builder = new StringBuilder();

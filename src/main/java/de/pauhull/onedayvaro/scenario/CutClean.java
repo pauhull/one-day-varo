@@ -71,7 +71,7 @@ public class CutClean extends Scenario implements Listener {
                 location.getWorld().dropItemNaturally(location, drop);
                 ExperienceOrb exp = (ExperienceOrb) location.getWorld().spawnEntity(location, EntityType.EXPERIENCE_ORB);
                 exp.setExperience(1);
-            }, 0);
+            }, 1);
 
             event.setCancelled(true);
             block.setType(Material.AIR);

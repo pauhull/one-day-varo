@@ -87,6 +87,6 @@ public class DoubleOres extends Scenario implements Listener {
                     exp.setExperience(2);
                 }
             }
-        }, 0);
+        }, 1);
     }
 }

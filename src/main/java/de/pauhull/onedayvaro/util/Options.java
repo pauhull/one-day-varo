@@ -51,11 +51,11 @@ public class Options {
 
     public enum ProtectionPeriod {
 
-        NONE(0, 0, "keine"),
-        FIVE_MINUTES(1, 5 * 60, "5 Minuten"),
-        TEN_MINUTES(2, 10 * 60, "10 Minuten"),
-        TWENTY_MINUTES(3, 20 * 60, "20 Minuten"),
-        THIRTY_MINUTES(4, 30 * 60, "30 Minuten");
+        NONE(0, 0, "none"),
+        FIVE_MINUTES(1, 5 * 60, "5 minutes"),
+        TEN_MINUTES(2, 10 * 60, "10 minutes"),
+        TWENTY_MINUTES(3, 20 * 60, "20 minutes"),
+        THIRTY_MINUTES(4, 30 * 60, "30 minutes");
 
         @Getter
         private int id;
